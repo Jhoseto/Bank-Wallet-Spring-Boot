@@ -1,7 +1,8 @@
 package serezliev.BankWallet.view;
 
-import jakarta.persistence.*;
 import serezliev.BankWallet.Model.AccountEntity;
+
+import javax.persistence.*;
 
 @Entity
 public class AccountHistoryModel {
