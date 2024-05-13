@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HTML интерфейс</title>
+    <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+<header>
+    <h1>Wallet</h1>
+    <nav>
+        <ul>
+
+        </ul>
+    </nav>
+</header>
+
+<div class="container">
+    <section>
+        <div class="feature-box">
+            <h2>Добре дошли в нашия сайт!</h2>
+            <p>Тук ще намерите много полезна информация.</p>
+            <a href="#" class="btn btn-primary">Научете повече</a>
+        </div>
+    </section>
+
+    <section>
+        <div class="row">
+            <div class="col-md-6">
+                <div class="feature-box">
+                    <h3>Наши услуги</h3>
+                    <ul>
+                        <li>Уеб дизайн</li>
+                        <li>Уеб разработка</li>
+                        <li>SEO оптимизация</li>
+                        <li>Дигитален маркетинг</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="feature-box">
+                    <h3>Контактна форма</h3>
+                    <form action="/submit-form" method="POST">
+                        <div class="form-group">
+                            <label for="name">Име:</label>
+                            <input type="text" id="name" name="name" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Имейл:</label>
+                            <input type="email" id="email" name="email" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label for="message">Съобщение:</label>
+                            <textarea id="message" name="message" class="form-control"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Изпрати</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+
+<footer>
+    <p>&copy; 2024 Нашата компания. Всички права запазени.</p>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+</body>
+</html>
