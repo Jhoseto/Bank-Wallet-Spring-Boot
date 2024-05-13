@@ -14,6 +14,9 @@ public class UserEntity {
     @Column(nullable = false)
     private String email;
 
+    @Column
+    private String password;
+
     // One user can have only one account
     @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
     private AccountEntity account;
@@ -42,6 +45,15 @@ public class UserEntity {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public UserEntity setPassword(String password) {
+        this.password = password;
+        return this;
     }
 
     public AccountEntity getAccount() {

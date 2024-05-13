@@ -37,9 +37,6 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
         http
                 .authorizeRequests()
                 .antMatchers(
-                        "/images/usersImg/**",
-                        "/webjars/**",
-                        "/images/offerImg/**",
                         "/css/**",
                         "/js/**",
                         "/images/**").permitAll()
@@ -51,7 +48,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .logoutSuccessUrl("/index")
 
                 .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID", "remember-me")
+                .deleteCookies("JSESSIONID")
                 .permitAll()
                 .and()
                 .sessionManagement()

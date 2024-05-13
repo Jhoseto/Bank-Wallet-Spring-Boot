@@ -28,4 +28,40 @@ public class UserRegistrationViewModel {
         }
         return true;
     }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public UserRegistrationViewModel setUsername(String username) {
+        this.username = username;
+        return this;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public UserRegistrationViewModel setEmail(String email) {
+        this.email = email;
+        return this;
+    }
+
+    public String getRegPassword() {
+        return regPassword;
+    }
+
+    public UserRegistrationViewModel setRegPassword(String regPassword) {
+        this.regPassword = regPassword;
+        return this;
+    }
+
+    public String getConfirmPassword() {
+        return confirmPassword;
+    }
+
+    public UserRegistrationViewModel setConfirmPassword(String confirmPassword) {
+        this.confirmPassword = confirmPassword;
+        return this;
+    }
 }

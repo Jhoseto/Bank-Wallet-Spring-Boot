@@ -6,12 +6,12 @@ import javax.validation.constraints.Size;
 
 public class LoginViewModel {
 
-    @NotNull
-    @Email
+    @NotNull (message = "Please input a valid email address !")
+    @Email(message = "Invalid Email format !")
     private String email;
 
-    @NotNull
-    @Size(min = 6)
+    @NotNull (message = "Please enter your password !")
+    @Size(min = 6, message = "Invalid password format !")
     private String password;
 
 
