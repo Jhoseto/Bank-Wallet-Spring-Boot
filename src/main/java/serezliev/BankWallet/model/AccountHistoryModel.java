@@ -1,6 +1,4 @@
-package serezliev.BankWallet.view;
-
-import serezliev.BankWallet.Model.AccountEntity;
+package serezliev.BankWallet.model;
 
 import javax.persistence.*;
 

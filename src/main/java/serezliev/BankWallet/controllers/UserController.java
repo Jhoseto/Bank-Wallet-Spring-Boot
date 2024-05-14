@@ -1,19 +1,19 @@
-package serezliev.BankWallet.Controllers;
+package serezliev.BankWallet.controllers;
 
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
-import serezliev.BankWallet.Model.UserEntity;
+import serezliev.BankWallet.model.UserEntity;
 import serezliev.BankWallet.repositories.UserRepository;
 import serezliev.BankWallet.services.UserService;
 import serezliev.BankWallet.view.LoginViewModel;
 import serezliev.BankWallet.view.UserRegistrationViewModel;
 
-import javax.naming.Binding;
-import java.time.Instant;
+import javax.validation.Valid;
 import java.util.Optional;
 
 @Controller
@@ -29,7 +29,8 @@ public class UserController {
 
 
     @PostMapping("/registration")
-    public String addRegistration (UserRegistrationViewModel userRegistrationViewModel,
+    public String addRegistration (@Valid UserRegistrationViewModel userRegistrationViewModel,
+                                   Model model,
                                    RedirectAttributes redirectAttributes,
                                    BindingResult bindingResult){
 
@@ -40,7 +41,7 @@ public class UserController {
                 errorMessages.append(error.getDefaultMessage()).append("\n");
             }
             if (!userRegistrationViewModel.isPasswordsMatch()) {
-                errorMessages.append("Паролите не съвпадат. ");
+                errorMessages.append("The passwords did not matched !. ");
             }
             redirectAttributes.addFlashAttribute("error", errorMessages.toString());
 

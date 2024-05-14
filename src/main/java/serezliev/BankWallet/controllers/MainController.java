@@ -1,4 +1,4 @@
-package serezliev.BankWallet.Controllers;
+package serezliev.BankWallet.controllers;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

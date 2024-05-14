@@ -1,7 +1,7 @@
 package serezliev.BankWallet.repositories;
 
 import org.springframework.data.jpa.repository.JpaRepository;
-import serezliev.BankWallet.Model.UserEntity;
+import serezliev.BankWallet.model.UserEntity;
 
 import java.util.Optional;
 

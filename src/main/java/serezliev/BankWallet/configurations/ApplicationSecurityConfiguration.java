@@ -1,7 +1,6 @@
 package serezliev.BankWallet.configurations;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -10,7 +9,6 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.crypto.password.Pbkdf2PasswordEncoder;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 import java.net.URLEncoder;
@@ -57,7 +55,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .exceptionHandling()
 
                 .authenticationEntryPoint((request, response, authException) -> {
-                    String errorMessage = "Моля влезте в профила си или се регистрирайте за да продължите!";
+                    String errorMessage = "Please Sign In, or Sign Up to continue !";
                     String encodedMessage = URLEncoder.encode(errorMessage, StandardCharsets.UTF_8);
                     response.sendRedirect("/index?error=" + encodedMessage);
                 })

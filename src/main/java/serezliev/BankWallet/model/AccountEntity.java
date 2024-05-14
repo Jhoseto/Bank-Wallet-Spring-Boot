@@ -1,7 +1,5 @@
-package serezliev.BankWallet.Model;
+package serezliev.BankWallet.model;
 
-
-import serezliev.BankWallet.view.AccountHistoryModel;
 
 import javax.persistence.*;
 import java.util.List;

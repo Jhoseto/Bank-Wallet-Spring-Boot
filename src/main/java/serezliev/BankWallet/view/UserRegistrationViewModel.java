@@ -6,21 +6,21 @@ import javax.validation.constraints.*;
 public class UserRegistrationViewModel {
 
     @NotNull
-    @Size(min = 5, max = 20, message = "Невалидно подребителско име! Въведете име с минимум 5 символа.")
+    @Size(min = 5, max = 20, message = "Invalid username ! Please enter a username with minimum 5, and maximum 20 symbols...")
     private String username;
 
     @NotNull
-    @Email(message = "Невалиден формат за Емейл!")
+    @Email(message = "Invalid Email format !")
     private String email;
 
     @NotNull
-    @Pattern(regexp = "^(?=.*[A-Z])(?=.*\\d).+$", message = "Паролата трябва да съдържа поне 6 символа на латиница, една голяма буква и поне две цифри")
+    @Pattern(regexp = "^(?=.*[A-Z])(?=.*\\d).+$", message = "Password must contain at least 6 Latin characters, one capital letter and at least two numbers")
     private String regPassword;
 
 
     private String confirmPassword;
 
-    @AssertTrue(message = "Грешка в повторението на паролата")
+    @AssertTrue(message = "Password repeat error !")
     public boolean isPasswordsMatch() {
         if (!regPassword.equals(confirmPassword)) {
             confirmPassword = null;

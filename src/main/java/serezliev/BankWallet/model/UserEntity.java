@@ -1,4 +1,4 @@
-package serezliev.BankWallet.Model;
+package serezliev.BankWallet.model;
 
 import javax.persistence.*;
 
