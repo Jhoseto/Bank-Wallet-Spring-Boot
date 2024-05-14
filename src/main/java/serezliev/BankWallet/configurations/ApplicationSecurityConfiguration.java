@@ -1,6 +1,7 @@
 package serezliev.BankWallet.configurations;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -9,10 +10,13 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.authentication.rememberme.TokenBasedRememberMeServices;
 import org.springframework.security.web.csrf.CookieCsrfTokenRepository;
 
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
+import java.security.SecureRandom;
+import java.util.Base64;
 
 @Configuration
 @EnableWebSecurity
@@ -38,15 +42,29 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                         "/css/**",
                         "/js/**",
                         "/images/**").permitAll()
-                .antMatchers("/", "/index").permitAll()
+                .antMatchers(
+                        "/",
+                        "/index",
+                        "/registration",
+                        "/login")
+                .permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .logout()
                 .logoutUrl("/user/logout")
                 .logoutSuccessUrl("/index")
 
+                .and()
+                .rememberMe() // Remember me functionality
+                .key(rememberMeKey()) // Unique key for remember me
+
+                .and()
+                .logout()
+                .logoutUrl("/user/logout")
+                .logoutSuccessUrl("/index")
+
                 .invalidateHttpSession(true)
-                .deleteCookies("JSESSIONID")
+                .deleteCookies("JSESSIONID", "remember-me") // Delete cookies for session and remember me
                 .permitAll()
                 .and()
                 .sessionManagement()
@@ -70,5 +88,21 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .passwordEncoder(passwordEncoder);
     }
 
+    @Bean
+    public String rememberMeKey() {
+        return generateKey();
+    }
+
+    public static String generateKey() {
+        SecureRandom secureRandom = new SecureRandom();
+        byte[] keyBytes = new byte[32];
+        secureRandom.nextBytes(keyBytes);
+        return Base64.getEncoder().encodeToString(keyBytes);
+    }
+
+    @Bean
+    public TokenBasedRememberMeServices tokenBasedRememberMeServices() {
+        return new TokenBasedRememberMeServices(rememberMeKey(), customUserDetailsService);
+    }
 
 }

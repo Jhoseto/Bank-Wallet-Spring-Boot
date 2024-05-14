@@ -31,7 +31,7 @@
             <a href="#" class="uui-navbar07_logo-link w-nav-brand"></a>
             <nav role="navigation" class="uui-navbar07_menu w-nav-menu">
               <div class="uui-navbar07_menu-left">
-                <a href="#" class="uui-navbar07_link w-nav-link">Home</a>
+                <a href="/index" class="uui-navbar07_link w-nav-link">Home</a>
                 <div data-delay="0" data-hover="false" data-w-id="b658ceef-f189-41a1-0042-b21b34a1c0ec" class="uui-navbar07_menu-dropdown deposit w-dropdown">
                   <div class="uui-navbar07_dropdown-toggle _23 deposit w-dropdown-toggle">
                     <div>Deposit</div>
@@ -103,9 +103,9 @@
                 </div>
               </div>
               <div class="div-block">
-                <div class="text-block user">User</div>
-                <div class="text-block">Balance  </div>
-                <div class="balancedigits">10000.00 </div>
+                <div class="text-block user" th:text="${@userServiceImpl.getCurrentUser()?.getUsername() != null ? @userServiceImpl.getCurrentUser().getUsername() : 'User'}">User</div>
+                <div class="text-block" th:if="${#authorization.expression('isAuthenticated()')}" >Balance  </div>
+                <div class="balancedigits" th:if="${#authorization.expression('isAuthenticated()')}">10000.00 </div>
               </div>
               <div class="uui-navbar07_menu-right">
                 <div data-delay="0" data-hover="false" data-w-id="db00abb0-c00c-45b3-b245-379da23ebbc5" class="uui-navbar07_menu-dropdown login w-dropdown" data-ix="new-interaction">
@@ -116,52 +116,50 @@
                     <div data-w-id="8d4f2c84-9ca5-85f7-da44-378173ff9e5c" style="opacity:0" class="form-block login w-form">
                       <h1 class="heading">Login</h1>
                       <form id="wf-form-registrationForm" name="wf-form-registrationForm" data-name="registrationForm"
-                            method="post" class="form" data-wf-page-id="664201e78b1c7ffac186db48" data-wf-element-id="8d4f2c84-9ca5-85f7-da44-378173ff9e5f">
+                            method="post"
+                            th:action="@{/login}"
+                            th:object="${loginModel}"
+                            class="form" data-wf-page-id="664201e78b1c7ffac186db48" data-wf-element-id="8d4f2c84-9ca5-85f7-da44-378173ff9e5f">
                         <label for="email-2">Email Address</label>
-                        <input class="text-field-2 w-input" maxlength="256" name="email-2" data-name="Email 2" placeholder="" type="email" id="email-2" required="">
+                        <input th:field="*{email}" class="text-field-2 w-input" maxlength="256" name="email-2" data-name="Email 2" placeholder="" type="email" id="email-2" required="">
                         <label for="password">Password</label>
-                        <input class="text-field-3 w-input" maxlength="256" name="email-2" data-name="Email 2" placeholder="" type="email" id="password" required="">
+                        <input th:field="*{password}" class="text-field-3 w-input" maxlength="256" name="email-2" data-name="Email 2" placeholder="" type="password" id="password" required="">
                         <input type="submit" data-wait="Please wait..." class="submit-button w-button" value="Submit">
                       </form>
-                      <div class="w-form-done">
-                        <div>Thank you! Your submission has been received!</div>
-                      </div>
-                      <div class="w-form-fail">
-                        <div>Oops! Something went wrong while submitting the form.</div>
-                      </div>
                     </div>
                   </nav>
                 </div>
-                <div data-delay="0" data-hover="false" data-w-id="34763141-5cc9-22d4-f4b5-27c460d1b7af" class="uui-navbar07_menu-dropdown register w-dropdown">
-                  <div class="uui-navbar07_dropdown-toggle _22 w-dropdown-toggle">
+                <div data-delay="0" data-hover="false" data-w-id="34763141-5cc9-22d4-f4b5-27c460d1b7af" class="uui-navbar07_menu-dropdown register w-dropdown" th:if="${#authorization.expression('!isAuthenticated()')}">
+                  <div  class="uui-navbar07_dropdown-toggle _22 w-dropdown-toggle">
                     <div class="text-block-2">Sign Up</div>
                   </div>
                   <nav data-w-id="34763141-5cc9-22d4-f4b5-27c460d1b7b3" class="uui-navbar07_dropdown-list w-dropdown-list">
                     <div class="form-block w-form">
                       <h1 class="heading">Sign Up</h1>
-                      <form id="wf-form-registrationForm" name="wf-form-registrationForm" data-name="registrationForm"
-                            method="post" class="form" data-wf-page-id="664201e78b1c7ffac186db48" data-wf-element-id="34763141-5cc9-22d4-f4b5-27c460d1b7b7">
+                      <form  name="wf-form-registrationForm" data-name="registrationForm"
+                            method="post"
+                            th:action="@{/registration}"
+                            th:object="${registrationModel}"
+                            class="form" data-wf-page-id="664201e78b1c7ffac186db48" data-wf-element-id="34763141-5cc9-22d4-f4b5-27c460d1b7b7">
                         <label for="name-2">Username</label>
-                        <input class="text-field w-input" maxlength="256" name="name-2" data-name="Name 2" placeholder="" type="text" id="name-2">
-                        <label for="email-3">Email Address</label>
-                        <input class="text-field-2 w-input" maxlength="256" name="email-2" data-name="Email 2" placeholder="" type="email" id="email-2" required="">
-                        <label for="password-3">Password</label>
-                        <input class="text-field-3 w-input" maxlength="256" name="email-2" data-name="Email 2" placeholder="" type="email" id="password" required="">
+                        <input th:field="*{username}" class="text-field w-input" maxlength="256" name="name-2" data-name="Name 2" placeholder="" type="text" id="name-2" required="">
+                        <label for="email-2">Email Address</label>
+                        <label>
+                          <input th:field="*{email}" class="text-field-2 w-input" maxlength="256" name="email-2" data-name="Email 2" placeholder="" type="email"  required="">
+                        </label>
+                        <label for="password">Password</label>
+                        <label>
+                          <input th:field="*{regPassword}" class="text-field-3 w-input" maxlength="256" name="email-2" data-name="Email 2" placeholder="" type="password"  required="">
+                        </label>
                         <label for="password2">Repeat password</label>
-                        <input class="text-field-4 w-input" maxlength="256" name="email-2" data-name="Email 2" placeholder="" type="email" id="password2" required="">
+                        <input th:field="*{confirmPassword}" class="text-field-4 w-input" maxlength="256" name="email-2" data-name="Email 2" placeholder="" type="password" id="password2" required="">
                         <input type="submit" data-wait="Please wait..." class="submit-button w-button" value="Submit">
                       </form>
-                      <div class="w-form-done">
-                        <div>Thank you! Your submission has been received!</div>
-                      </div>
-                      <div class="w-form-fail">
-                        <div>Oops! Something went wrong while submitting the form.</div>
-                      </div>
                     </div>
                   </nav>
                 </div>
               </div>
-              <div class="text-block-3">Logout</div>
+              <div class="text-block-3" th:if="${#authorization.expression('isAuthenticated()')}">Logout</div>
             </nav>
             <div class="uui-navbar07_menu-button w-nav-button">
               <div class="menu-icon_component">
@@ -175,11 +173,19 @@
           </div>
         </div>
       </div>
-      <div class="w-form-done">
-        <div class="text-block-4">text messages<br>‍</div>
+      <div>
+      </div>
+      <div class="massage-done">
+        <div th:if="${error}" class="error-message">
+          <p th:text="${error}" class="error-text" style="color: #dc3838;"></p>
+        </div>
+        <div th:if="${successMessage}" class="success-message">
+          <p th:text="${successMessage}" class="success-text" style="color: #00ab46; font-size: 16px;"></p>
+        </div>
       </div>
     </div>
-    <div class="w-layout-blockcontainer container-3 w-container">
+    <h1 class="heading-3">Live Wallet</h1>
+    <div class="w-layout-blockcontainer container-3 w-container" th:if="${#authorization.expression('isAuthenticated()')}">
       <h1 class="heading-2">Account history</h1>
       <div class="div-block-4">
         <div class="history-block">

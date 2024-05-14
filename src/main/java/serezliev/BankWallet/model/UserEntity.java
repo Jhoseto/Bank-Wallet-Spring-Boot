@@ -1,6 +1,7 @@
 package serezliev.BankWallet.model;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Entity
 public class UserEntity {
@@ -17,17 +18,21 @@ public class UserEntity {
     @Column
     private String password;
 
-    // One user can have only one account
-    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL)
-    private AccountEntity account;
+    @Column
+    private double balance;
+
+    // One user can have many history records
+    @OneToMany(mappedBy = "userAccount", cascade = CascadeType.ALL)
+    private List<AccountHistoryModel> accountHistory;
 
 
     public Long getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public UserEntity setId(Long id) {
         this.id = id;
+        return this;
     }
 
     public String getUsername() {
@@ -43,8 +48,9 @@ public class UserEntity {
         return email;
     }
 
-    public void setEmail(String email) {
+    public UserEntity setEmail(String email) {
         this.email = email;
+        return this;
     }
 
     public String getPassword() {
@@ -56,11 +62,21 @@ public class UserEntity {
         return this;
     }
 
-    public AccountEntity getAccount() {
-        return account;
+    public double getBalance() {
+        return balance;
     }
 
-    public void setAccount(AccountEntity account) {
-        this.account = account;
+    public UserEntity setBalance(double balance) {
+        this.balance = balance;
+        return this;
+    }
+
+    public List<AccountHistoryModel> getAccountHistory() {
+        return accountHistory;
+    }
+
+    public UserEntity setAccountHistory(List<AccountHistoryModel> accountHistory) {
+        this.accountHistory = accountHistory;
+        return this;
     }
 }

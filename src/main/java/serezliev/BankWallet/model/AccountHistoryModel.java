@@ -9,8 +9,8 @@ public class AccountHistoryModel {
     private Long id;
 
     @ManyToOne
-    @JoinColumn(name = "account_id", nullable = false)
-    private AccountEntity account;
+    @JoinColumn(name = "user_account_id", nullable = false)
+    private UserEntity userAccount;
 
     @Column(nullable = false)
     private String action;
@@ -26,12 +26,12 @@ public class AccountHistoryModel {
         this.id = id;
     }
 
-    public AccountEntity getAccount() {
-        return account;
+    public UserEntity getUserAccount() {
+        return userAccount;
     }
 
-    public void setAccount(AccountEntity account) {
-        this.account = account;
+    public void setUserAccount(UserEntity userAccount) {
+        this.userAccount = userAccount;
     }
 
     public String getAction() {

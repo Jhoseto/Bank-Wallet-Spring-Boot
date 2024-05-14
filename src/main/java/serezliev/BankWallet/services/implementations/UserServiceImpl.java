@@ -3,6 +3,8 @@ package serezliev.BankWallet.services.implementations;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import serezliev.BankWallet.model.UserEntity;
@@ -15,35 +17,52 @@ import java.util.Optional;
 @Service
 public class UserServiceImpl implements UserService {
 
-
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
+    private final UserDetailsService userDetailsService;
 
     public UserServiceImpl(PasswordEncoder passwordEncoder,
-                           UserRepository userRepository) {
+                           UserRepository userRepository,
+                           UserDetailsService userDetailsService) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
+        this.userDetailsService = userDetailsService;
     }
 
     @Override
     public void addNewUser(UserRegistrationViewModel userRegistrationViewModel) {
-
         UserEntity newUser = new UserEntity();
+
         newUser.setUsername(userRegistrationViewModel.getUsername())
                 .setPassword(passwordEncoder.encode(userRegistrationViewModel.getRegPassword()))
                 .setEmail(userRegistrationViewModel.getEmail());
+
         userRepository.save(newUser);
     }
 
-
-    @Override
     public Authentication authenticateUser(String email, String password) {
-        Optional<UserEntity> user = userRepository.findByEmail(email);
+        UserDetails userDetails = userDetailsService.loadUserByUsername(email);
 
-        if (user.isPresent() && passwordEncoder.matches(password, user.get().getPassword())) {
-            Authentication authentication = new UsernamePasswordAuthenticationToken(user, null);
+        if (userDetails != null && passwordEncoder.matches(password, userDetails.getPassword())) {
+            Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
             SecurityContextHolder.getContext().setAuthentication(authentication);
+
             return authentication;
+        }
+        return null;
+    }
+
+    public UserEntity getCurrentUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.isAuthenticated()) {
+            String username = authentication.getName();
+            Optional<UserEntity> userOptional = userRepository.findByUsername(username);
+            if (userOptional.isPresent()) {
+                return userOptional.get();
+            } else {
+                Optional<UserEntity> userByEmailOptional = userRepository.findByEmail(username);
+                return userByEmailOptional.orElse(null);
+            }
         }
         return null;
     }

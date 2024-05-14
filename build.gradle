@@ -21,22 +21,31 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 	implementation 'org.springframework.boot:spring-boot-devtools'
+	implementation 'org.springframework.security:spring-security-crypto:5.5.2'
 	implementation 'org.modelmapper:modelmapper:2.4.4'
 	implementation 'com.mysql:mysql-connector-j:8.3.0'
 	implementation 'org.springframework.boot:spring-boot-starter-security'
-	implementation 'org.springframework.security:spring-security-crypto:5.5.2'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity5'
 
 	//webSocket and JSON
 	implementation 'org.webjars:sockjs-client:1.1.2'
 	implementation 'org.webjars:stomp-websocket:2.3.3'
 	implementation 'com.fasterxml.jackson.core:jackson-databind'
 
+	//PostgreSQL driver vor HEROKU
+	implementation 'org.postgresql:postgresql:42.7.3'
+
+	//TEST
+	testImplementation 'org.springframework.security:spring-security-test'
+
 
 	implementation 'org.springframework.boot:spring-boot-starter-websocket'
 
 	implementation 'io.springfox:springfox-boot-starter:3.0.0'
 	implementation 'org.owasp.encoder:encoder:1.2.3'
+	implementation 'org.springframework.boot:spring-boot-starter-mail'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
 tasks.named('test') {
