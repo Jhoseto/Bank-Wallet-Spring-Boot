@@ -41,13 +41,13 @@
                   <nav class="uui-navbar07_dropdown-list deposit w-dropdown-list">
                     <div data-w-id="b658ceef-f189-41a1-0042-b21b34a1c0f1" style="opacity:0" class="form-block w-form">
                       <h1 class="heading">Deposit funds</h1>
-                      <form name="wf-form-registrationForm" data-name="registrationForm"
+                      <form name="wf-form-depositForm" data-name="depositForm"
                             method="post"
-                            th:action="@{/login}"
+                            th:action="@{/deposit}"
                             th:object="${depositModel}"
                             class="form" data-wf-page-id="664201e78b1c7ffac186db48" data-wf-element-id="b658ceef-f189-41a1-0042-b21b34a1c0f4">
                         <label for="deposit-amount">Amount</label>
-                        <input class="text-field-2 w-input" min="0.01" maxlength="256" name="deposit-amount" data-name="deposit amount" placeholder="" type="number" id="deposit-amount" required="">
+                        <input th:field="*{amount}" class="text-field-2 w-input" maxlength="256" name="deposit-amount" data-name="deposit amount" placeholder="" type="number" id="deposit-amount" required="">
                         <input type="submit" data-wait="Please wait..." class="submit-button w-button" value="Deposit">
                       </form>
                     </div>
@@ -91,7 +91,7 @@
               <div class="div-block">
                 <div class="text-block user" th:text="${@userServiceImpl.getCurrentUser()?.getUsername() != null ? @userServiceImpl.getCurrentUser().getUsername() : 'Guest'}">User</div>
                 <div class="text-block" th:if="${#authorization.expression('isAuthenticated()')}"  >Balance  </div>
-                <div class="balancedigits" th:if="${#authorization.expression('isAuthenticated()')}" th:text="${user.balance}">10000.00 </div>
+                <div class="balancedigits" th:if="${#authorization.expression('isAuthenticated()')}" th:text="${user.balance}+'  $'">10000.00 </div>
               </div>
               <div class="uui-navbar07_menu-right">
                 <div th:if="${#authorization.expression('!isAuthenticated()')}" data-delay="0" data-hover="false" data-w-id="db00abb0-c00c-45b3-b245-379da23ebbc5" class="uui-navbar07_menu-dropdown login w-dropdown" data-ix="new-interaction">
@@ -178,11 +178,8 @@
     <div class="w-layout-blockcontainer container-3 w-container" th:if="${#authorization.expression('isAuthenticated()')}">
       <h1 class="heading-2">Account history</h1>
       <div class="div-block-4">
-        <div class="history-block">
-          <div class="action-box">action</div>
-          <div class="userbox">userBox</div>
-          <div class="amount-box">action</div>
-          <div class="dateandtimebox">date and time</div>
+        <div th:each="action : ${user.actionHistory}" class="history-block">
+          <div th:text="${action.toString()}" class="action-box"></div>
         </div>
       </div>
     </div>

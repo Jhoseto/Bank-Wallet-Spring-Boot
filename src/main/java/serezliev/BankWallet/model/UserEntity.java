@@ -1,6 +1,10 @@
 package serezliev.BankWallet.model;
 
+import org.hibernate.Hibernate;
+import org.springframework.transaction.annotation.Transactional;
+
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -21,10 +25,10 @@ public class UserEntity {
     @Column
     private double balance;
 
-    // One user can have many history records
-    @OneToMany(mappedBy = "userAccount", cascade = CascadeType.ALL)
-    private List<AccountHistoryModel> accountHistory;
-
+    @ElementCollection
+    @CollectionTable(name = "action_history", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "action")
+    private List<String> actionHistory;
 
     public Long getId() {
         return id;
@@ -71,12 +75,16 @@ public class UserEntity {
         return this;
     }
 
-    public List<AccountHistoryModel> getAccountHistory() {
-        return accountHistory;
+    public List<String> getActionHistory() {
+        Hibernate.initialize(actionHistory);
+        return actionHistory;
     }
 
-    public UserEntity setAccountHistory(List<AccountHistoryModel> accountHistory) {
-        this.accountHistory = accountHistory;
-        return this;
+    @Transactional
+    public void addActionToHistory(String action) {
+        if (actionHistory == null) {
+            actionHistory = new ArrayList<>();
+        }
+        actionHistory.add(action);
     }
 }
