@@ -35,7 +35,8 @@ public class UserServiceImpl implements UserService {
 
         newUser.setUsername(userRegistrationViewModel.getUsername())
                 .setPassword(passwordEncoder.encode(userRegistrationViewModel.getRegPassword()))
-                .setEmail(userRegistrationViewModel.getEmail());
+                .setEmail(userRegistrationViewModel.getEmail())
+                .setBalance(0);
 
         userRepository.save(newUser);
     }

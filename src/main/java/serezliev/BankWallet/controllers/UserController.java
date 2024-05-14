@@ -109,7 +109,6 @@ public class UserController {
                         // User is autenticate
 
                         rememberMeServices.loginSuccess(request, response, authentication);
-                        redirectAttributes.addFlashAttribute("successMessage", "Welcome "+ authentication.getName());
                     } else {
                         // Wrong password
                         redirectAttributes.addFlashAttribute("error", "Wrong password !");

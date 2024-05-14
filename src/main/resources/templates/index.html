@@ -32,87 +32,73 @@
             <nav role="navigation" class="uui-navbar07_menu w-nav-menu">
               <div class="uui-navbar07_menu-left">
                 <a href="/index" class="uui-navbar07_link w-nav-link">Home</a>
-                <div data-delay="0" data-hover="false" data-w-id="b658ceef-f189-41a1-0042-b21b34a1c0ec" class="uui-navbar07_menu-dropdown deposit w-dropdown">
+
+                <div th:if="${#authorization.expression('isAuthenticated()')}"
+                     data-delay="0" data-hover="false" data-w-id="b658ceef-f189-41a1-0042-b21b34a1c0ec" class="uui-navbar07_menu-dropdown deposit w-dropdown">
                   <div class="uui-navbar07_dropdown-toggle _23 deposit w-dropdown-toggle">
                     <div>Deposit</div>
                   </div>
                   <nav class="uui-navbar07_dropdown-list deposit w-dropdown-list">
                     <div data-w-id="b658ceef-f189-41a1-0042-b21b34a1c0f1" style="opacity:0" class="form-block w-form">
                       <h1 class="heading">Deposit funds</h1>
-                      <form id="wf-form-registrationForm" name="wf-form-registrationForm" data-name="registrationForm"
+                      <form name="wf-form-registrationForm" data-name="registrationForm"
                             method="post"
+                            th:action="@{/login}"
+                            th:object="${depositModel}"
                             class="form" data-wf-page-id="664201e78b1c7ffac186db48" data-wf-element-id="b658ceef-f189-41a1-0042-b21b34a1c0f4">
                         <label for="deposit-amount">Amount</label>
-                        <input class="text-field-2 w-input" maxlength="256" name="deposit-amount" data-name="deposit amount" placeholder="" type="number" id="deposit-amount" required="">
+                        <input class="text-field-2 w-input" min="0.01" maxlength="256" name="deposit-amount" data-name="deposit amount" placeholder="" type="number" id="deposit-amount" required="">
                         <input type="submit" data-wait="Please wait..." class="submit-button w-button" value="Deposit">
                       </form>
-                      <div class="w-form-done">
-                        <div>Thank you! Your submission has been received!</div>
-                      </div>
-                      <div class="w-form-fail">
-                        <div>Oops! Something went wrong while submitting the form.</div>
-                      </div>
                     </div>
                   </nav>
                 </div>
-                <div data-delay="0" data-hover="false" data-w-id="c3cd380a-305f-59f5-0d05-adee92a9caff" class="uui-navbar07_menu-dropdown withdrawal w-dropdown">
+                <div th:if="${#authorization.expression('isAuthenticated()')}"  data-delay="0" data-hover="false" data-w-id="c3cd380a-305f-59f5-0d05-adee92a9caff" class="uui-navbar07_menu-dropdown withdrawal w-dropdown">
                   <div class="uui-navbar07_dropdown-toggle wthdrawal w-dropdown-toggle">
                     <div>Withdrawal</div>
                   </div>
                   <nav class="uui-navbar07_dropdown-list withdrawal w-dropdown-list">
                     <div data-w-id="c3cd380a-305f-59f5-0d05-adee92a9cb04" style="opacity:0" class="form-block w-form">
                       <h1 class="heading">Withdrawal funds</h1>
-                      <form id="wf-form-registrationForm" name="wf-form-registrationForm" data-name="registrationForm"
+                      <form name="wf-form-registrationForm" data-name="registrationForm"
                             method="post" class="form" data-wf-page-id="664201e78b1c7ffac186db48" data-wf-element-id="c3cd380a-305f-59f5-0d05-adee92a9cb07">
                         <label for="Withdrawal-amount">Amount</label>
-                        <input class="text-field-2 w-input" maxlength="256" name="Withdrawal-amount" data-name="Withdrawal amount" placeholder="" type="number" id="Withdrawal-amount" required="">
+                        <input class="text-field-2 w-input" min="0.01" maxlength="256" name="Withdrawal-amount" data-name="Withdrawal amount" placeholder="" type="number" id="Withdrawal-amount" required="">
                         <input type="submit" data-wait="Please wait..." class="submit-button w-button" value="Withdrawal">
                       </form>
-                      <div class="w-form-done">
-                        <div>Thank you! Your submission has been received!</div>
-                      </div>
-                      <div class="w-form-fail">
-                        <div>Oops! Something went wrong while submitting the form.</div>
-                      </div>
                     </div>
                   </nav>
                 </div>
-                <div data-delay="0" data-hover="false" data-w-id="2b9fa281-c065-d3f9-6ed4-d003e4c1fa6a" class="uui-navbar07_menu-dropdown send w-dropdown">
+                <div th:if="${#authorization.expression('isAuthenticated()')}"  data-delay="0" data-hover="false" data-w-id="2b9fa281-c065-d3f9-6ed4-d003e4c1fa6a" class="uui-navbar07_menu-dropdown send w-dropdown">
                   <div class="uui-navbar07_dropdown-toggle wthdrawal w-dropdown-toggle">
                     <div>Send</div>
                   </div>
                   <nav class="uui-navbar07_dropdown-list withdrawal send w-dropdown-list">
                     <div data-w-id="2b9fa281-c065-d3f9-6ed4-d003e4c1fa6f" style="opacity:0" class="form-block send w-form">
                       <h1 class="heading">Send funds</h1>
-                      <form id="wf-form-registrationForm" name="wf-form-registrationForm" data-name="registrationForm"
+                      <form name="wf-form-registrationForm" data-name="registrationForm"
                             method="post" class="form" data-wf-page-id="664201e78b1c7ffac186db48" data-wf-element-id="2b9fa281-c065-d3f9-6ed4-d003e4c1fa72">
                         <label for="receiver-email">Send to ...</label>
                         <input class="text-field-2 w-input" maxlength="256" name="receiver-email" data-name="receiver email" placeholder="Enter receiver email address..." type="email" id="receiver-email" required="">
                         <label for="send-amount">Amount</label>
-                        <input class="text-field-3 w-input" maxlength="256" name="send-amount" data-name="send amount" placeholder="" type="number" id="send-amount" required="">
+                        <input class="text-field-3 w-input" min="0.01" maxlength="256" name="send-amount" data-name="send amount" placeholder="" type="number" id="send-amount" required="">
                         <input type="submit" data-wait="Please wait..." class="submit-button w-button" value="Send">
                       </form>
-                      <div class="w-form-done">
-                        <div>Thank you! Your submission has been received!</div>
-                      </div>
-                      <div class="w-form-fail">
-                        <div>Oops! Something went wrong while submitting the form.</div>
-                      </div>
                     </div>
                   </nav>
                 </div>
               </div>
               <div class="div-block">
-                <div class="text-block user" th:text="${@userServiceImpl.getCurrentUser()?.getUsername() != null ? @userServiceImpl.getCurrentUser().getUsername() : 'User'}">User</div>
-                <div class="text-block" th:if="${#authorization.expression('isAuthenticated()')}" >Balance  </div>
-                <div class="balancedigits" th:if="${#authorization.expression('isAuthenticated()')}">10000.00 </div>
+                <div class="text-block user" th:text="${@userServiceImpl.getCurrentUser()?.getUsername() != null ? @userServiceImpl.getCurrentUser().getUsername() : 'Guest'}">User</div>
+                <div class="text-block" th:if="${#authorization.expression('isAuthenticated()')}"  >Balance  </div>
+                <div class="balancedigits" th:if="${#authorization.expression('isAuthenticated()')}" th:text="${user.balance}">10000.00 </div>
               </div>
               <div class="uui-navbar07_menu-right">
-                <div data-delay="0" data-hover="false" data-w-id="db00abb0-c00c-45b3-b245-379da23ebbc5" class="uui-navbar07_menu-dropdown login w-dropdown" data-ix="new-interaction">
+                <div th:if="${#authorization.expression('!isAuthenticated()')}" data-delay="0" data-hover="false" data-w-id="db00abb0-c00c-45b3-b245-379da23ebbc5" class="uui-navbar07_menu-dropdown login w-dropdown" data-ix="new-interaction">
                   <div class="uui-navbar07_dropdown-toggle _22 _12 w-dropdown-toggle">
                     <div>Log In</div>
                   </div>
-                  <nav data-w-id="db00abb0-c00c-45b3-b245-379da23ebbc9" style="opacity:0;-webkit-transform:translate3d(0, -2rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, -2rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, -2rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, -2rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)" class="uui-navbar07_dropdown-list login w-dropdown-list">
+                  <nav  data-w-id="db00abb0-c00c-45b3-b245-379da23ebbc9" style="opacity:0;-webkit-transform:translate3d(0, -2rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-moz-transform:translate3d(0, -2rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);-ms-transform:translate3d(0, -2rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0);transform:translate3d(0, -2rem, 0) scale3d(1, 1, 1) rotateX(0) rotateY(0) rotateZ(0) skew(0, 0)" class="uui-navbar07_dropdown-list login w-dropdown-list">
                     <div data-w-id="8d4f2c84-9ca5-85f7-da44-378173ff9e5c" style="opacity:0" class="form-block login w-form">
                       <h1 class="heading">Login</h1>
                       <form id="wf-form-registrationForm" name="wf-form-registrationForm" data-name="registrationForm"
@@ -129,11 +115,11 @@
                     </div>
                   </nav>
                 </div>
-                <div data-delay="0" data-hover="false" data-w-id="34763141-5cc9-22d4-f4b5-27c460d1b7af" class="uui-navbar07_menu-dropdown register w-dropdown" th:if="${#authorization.expression('!isAuthenticated()')}">
+                <div  th:if="${#authorization.expression('!isAuthenticated()')}" data-delay="0" data-hover="false" data-w-id="34763141-5cc9-22d4-f4b5-27c460d1b7af" class="uui-navbar07_menu-dropdown register w-dropdown" >
                   <div  class="uui-navbar07_dropdown-toggle _22 w-dropdown-toggle">
                     <div class="text-block-2">Sign Up</div>
                   </div>
-                  <nav data-w-id="34763141-5cc9-22d4-f4b5-27c460d1b7b3" class="uui-navbar07_dropdown-list w-dropdown-list">
+                  <nav  data-w-id="34763141-5cc9-22d4-f4b5-27c460d1b7b3" class="uui-navbar07_dropdown-list w-dropdown-list">
                     <div class="form-block w-form">
                       <h1 class="heading">Sign Up</h1>
                       <form  name="wf-form-registrationForm" data-name="registrationForm"
@@ -159,7 +145,11 @@
                   </nav>
                 </div>
               </div>
-              <div class="text-block-3" th:if="${#authorization.expression('isAuthenticated()')}">Logout</div>
+              <!-- Форма за логаут -->
+              <form id="logout-form" th:action="@{/user/logout}" method="post" style="display: none;">
+                <input type="submit" value="Logout" />
+              </form>
+              <div class="text-block-3" th:if="${#authorization.expression('isAuthenticated()')}" onclick="document.getElementById('logout-form').submit()">Logout</div>
             </nav>
             <div class="uui-navbar07_menu-button w-nav-button">
               <div class="menu-icon_component">
@@ -175,7 +165,7 @@
       </div>
       <div>
       </div>
-      <div class="massage-done">
+      <div class="massage-done" style="display: flex; justify-content: center;">
         <div th:if="${error}" class="error-message">
           <p th:text="${error}" class="error-text" style="color: #dc3838;"></p>
         </div>
@@ -184,7 +174,7 @@
         </div>
       </div>
     </div>
-    <h1 class="heading-3">Live Wallet</h1>
+    <h1 class="heading-3" th:text="${@userServiceImpl.getCurrentUser()?.getUsername() != null ? @userServiceImpl.getCurrentUser().getUsername()+' Wallet' : 'Live Wallet'}" >Live Wallet</h1>
     <div class="w-layout-blockcontainer container-3 w-container" th:if="${#authorization.expression('isAuthenticated()')}">
       <h1 class="heading-2">Account history</h1>
       <div class="div-block-4">

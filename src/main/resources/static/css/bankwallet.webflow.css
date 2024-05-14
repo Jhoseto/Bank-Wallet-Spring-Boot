@@ -265,6 +265,10 @@
   margin-bottom: 40px;
 }
 
+.form-block.send {
+  margin-bottom: 10px;
+}
+
 .submit-button {
   background-color: var(--sdfhg);
   margin: 10px auto;
@@ -273,7 +277,7 @@
 }
 
 .form {
-  margin-bottom: 20px;
+  margin-bottom: 10px;
   margin-left: auto;
   margin-right: auto;
   padding: 10px 20px;
@@ -473,20 +477,20 @@
 }
 
 .uui-navbar07_dropdown-list.withdrawal.w--open {
-  top: 300px;
+  top: 44px;
   bottom: auto;
-  left: 280px;
+  left: -101px;
   right: auto;
 }
 
 .uui-navbar07_dropdown-list.withdrawal.send.w--open {
-  top: 260px;
-  left: 146px;
+  top: 41px;
+  left: -107px;
 }
 
 .uui-navbar07_dropdown-list.deposit.w--open {
-  top: 300px;
-  left: 400px;
+  top: 41px;
+  left: -38px;
 }
 
 .uui-navbar07_dropdown-list.login.w--open {
@@ -729,7 +733,7 @@
   min-height: 200px;
   max-height: 200px;
   position: relative;
-  top: 360px;
+  top: 110px;
 }
 
 .heading-2 {
@@ -791,6 +795,7 @@
 }
 
 .text-block-3 {
+  cursor: pointer;
   margin-left: 40px;
   font-family: Georgia, Times, Times New Roman, serif;
   font-size: 16px;

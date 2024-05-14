@@ -1,84 +1,33 @@
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background-color: #f8f9fa;
-    color: #333;
-    margin: 0;
-    padding: 0;
-}
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-}
-header {
-    background-color: #007bff;
-    color: #fff;
-    padding: 20px;
-    text-align: center;
-}
-nav ul {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    justify-content: center;
-}
-nav ul li {
-    margin-right: 20px;
-}
-section {
-    margin-bottom: 40px;
-}
-.feature-box {
-    padding: 20px;
-    background-color: #fff;
-    border-radius: 10px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-.btn-primary {
-    background-color: #618fc0;
-    border-color: #112131;
-}
-.btn-primary:hover {
-    background-color: #7696b9;
-    border-color: #3c648f;
-}
-footer {
-    text-align: center;
-    padding: 20px;
-    background-color: #333;
-    color: #fff;
-}
 
 /* Стилове за контейнера със съобщенията */
 .massage-done {
     display: flex;
     justify-content: center; /* Центриране на съдържанието по хоризонтала */
-    align-items: center; /* Центриране на съдържанието по вертикала */
     height: 100vh; /* Заетост на цялата височина на екрана */
 }
 
 /* Стилове за контейнер с грешка */
 .error-message {
-    background-color: #dc3838; /* Цвят на фона за грешка */
+    background-color: rgba(220, 56, 56, 0); /* Цвят на фона за грешка */
     padding: 20px; /* Отстъп от съдържанието */
     border-radius: 8px; /* Закръгляне на ръбовете */
 }
 
 /* Стилове за текста за грешка */
 .error-text {
-    color: white; /* Цвят на текста */
+    color: #1bff1f; /* Цвят на текста */
     font-size: 16px; /* Големина на шрифта */
 }
 
 /* Стилове за контейнер с успех */
 .success-message {
-    background-color: #00ab46; /* Цвят на фона за успех */
+    background-color: rgba(0, 171, 70, 0); /* Цвят на фона за успех */
     padding: 20px; /* Отстъп от съдържанието */
     border-radius: 8px; /* Закръгляне на ръбовете */
 }
 
 /* Стилове за текста за успех */
 .success-text {
-    color: white; /* Цвят на текста */
+    color: rgb(27, 253, 31); /* Цвят на текста */
     font-size: 16px; /* Големина на шрифта */
 }

@@ -68,7 +68,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .permitAll()
                 .and()
                 .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.IF_REQUIRED)
+                .sessionCreationPolicy(SessionCreationPolicy.ALWAYS)
                 .and()
                 .exceptionHandling()
 
