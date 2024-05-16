@@ -12,6 +12,7 @@
   <meta content="Webflow" name="generator">
   <link href="/css/normalize.css" rel="stylesheet" type="text/css">
   <link href="/css/webflow.css" rel="stylesheet" type="text/css">
+  <link href="/css/styles.css" rel="stylesheet" type="text/css">
   <link href="/css/bankwallet.webflow.css" rel="stylesheet" type="text/css">
   <style>@media (max-width:991px) and (min-width:768px) {html.w-mod-js:not(.w-mod-ix) [data-w-id="34763141-5cc9-22d4-f4b5-27c460d1b7b3"] {height:0px;}}@media (max-width:767px) and (min-width:480px) {html.w-mod-js:not(.w-mod-ix) [data-w-id="34763141-5cc9-22d4-f4b5-27c460d1b7b3"] {height:0px;}}@media (max-width:479px) {html.w-mod-js:not(.w-mod-ix) [data-w-id="34763141-5cc9-22d4-f4b5-27c460d1b7b3"] {height:0px;}}</style>
   <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -133,9 +134,10 @@
                             method="post"
                             th:action="@{/deleteContact}"
                             th:object="${deleteContact}"
-                            class="form addContact" data-wf-page-id="664201e78b1c7ffac186db48" data-wf-element-id="509965bd-cc53-bc55-727b-297dca5f47ac">
+                            class="form addContact" data-wf-page-id="664201e78b1c7ffac186db48"
+                            data-wf-element-id="509965bd-cc53-bc55-727b-297dca5f47ac">
                         <label for="field">Contact List</label>
-                        <select id="field" name="field" data-name="Field" class="select-field-2 w-select">
+                        <select id="field" name="selectedContact" class="select-field-2 w-select" required>
                           <option value="">Select contact...</option>
                           <option th:if="${contactList != null}" th:each="contact : ${contactList}" th:value="${contact}" th:text="${contact}"></option>
                         </select>

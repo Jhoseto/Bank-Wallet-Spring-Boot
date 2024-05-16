@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import serezliev.BankWallet.model.UserEntity;
 import serezliev.BankWallet.repositories.UserRepository;
@@ -125,10 +126,15 @@ public class UserController {
     }
 
     @PostMapping("/deleteContact")
-    public String deleteContact (@Valid @ModelAttribute("deleteContact") MyContactViewModel contact,
+    public String deleteContact (@RequestParam("selectedContact") String selectedContact,
                                  RedirectAttributes redirectAttributes){
 
-        userService.deleteContact(contact.getContactEmail());
+        if (userService.getCurrentUser().getContactList().contains(selectedContact)){
+            userService.deleteContact(selectedContact);
+            redirectAttributes.addFlashAttribute("successMessage"," Successfully deleted "+selectedContact+" from your Contact List !");
+        } else {
+            redirectAttributes.addFlashAttribute("error"," Oops! Something went wrong while submitting the form.");
+        }
 
         return "redirect:/index";
     }
@@ -139,13 +145,18 @@ public class UserController {
         Optional<UserEntity> user = userRepository.findByEmail(contact.getContactEmail());
 
         if (user.isPresent()){
-            userService.addContact(contact.getContactEmail());
-            redirectAttributes.addFlashAttribute("successMessage", contact.getContactEmail()+" Successfully added to your Contact List !");
+            if (!user.get().getContactList().contains(contact.getContactEmail())){
+                userService.addContact(contact.getContactEmail());
+                redirectAttributes.addFlashAttribute("successMessage", contact.getContactEmail()+" Successfully added to your Contact List !");
+            } else {
+                redirectAttributes.addFlashAttribute("error", contact.getContactEmail()+" is already added in your Contact List !");
+                return "redirect:/index";
+            }
+
         } else {
             redirectAttributes.addFlashAttribute("error", "The contact you tried to add is not found in our system. " +
                     "Please add a contact that is registered in our database.");
         }
-
         return "redirect:/index";
     }
 }

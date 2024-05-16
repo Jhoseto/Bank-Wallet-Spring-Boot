@@ -1,0 +1,32 @@
+/* Стил за контейнера на съобщенията */
+.massage-done {
+    display: flex;
+    justify-content: center;
+}
+
+/* Стил за грешното съобщение */
+.error-message {
+    background-color: rgba(255, 255, 255, 0.6); /* Цвят на фона с лека прозрачност */
+    padding: 10px;
+    border-radius: 20px; /* Заоблени ъгли */
+    margin-bottom: 10px;
+}
+
+/* Стил за текста на грешното съобщение */
+.error-text {
+    color: #dc3838;
+}
+
+/* Стил за успешното съобщение */
+.success-message {
+    background-color: rgba(255, 255, 255, 0.48); /* Цвят на фона с лека прозрачност */
+    padding: 10px;
+    border-radius: 10px; /* Заоблени ъгли */
+    margin-bottom: 10px;
+}
+
+/* Стил за текста на успешното съобщение */
+.success-text {
+    color: #00ab46;
+    font-size: 16px;
+}

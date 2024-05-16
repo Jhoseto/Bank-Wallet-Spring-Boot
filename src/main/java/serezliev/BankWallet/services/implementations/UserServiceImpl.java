@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import serezliev.BankWallet.model.UserEntity;
 import serezliev.BankWallet.repositories.UserRepository;
 import serezliev.BankWallet.services.UserService;
@@ -68,14 +69,18 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
+
     @Override
+    @Transactional
     public void deleteContact(String contact){
         UserEntity user = getCurrentUser();
         user.getContactList().remove(contact);
         userRepository.save(user);
     }
 
+
     @Override
+    @Transactional
     public void addContact(String contact){
         UserEntity user = getCurrentUser();
         user.getContactList().add(contact);
