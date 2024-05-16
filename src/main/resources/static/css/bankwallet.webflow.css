@@ -479,7 +479,7 @@
 .uui-navbar07_dropdown-list.withdrawal.w--open {
   top: 44px;
   bottom: auto;
-  left: -101px;
+  left: -89px;
   right: auto;
 }
 
@@ -739,7 +739,7 @@
 .heading-2 {
   color: var(--sdfhg);
   margin-top: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 0;
   margin-left: 0;
   padding-left: 40px;
   padding-right: 0;
@@ -861,6 +861,14 @@
   font-family: Georgia, Times, Times New Roman, serif;
   font-size: 45px;
   font-weight: 700;
+}
+
+.div-block-5 {
+  margin-top: 20px;
+}
+
+.select-field, .select-field-2 {
+  color: var(--sdfhg);
 }
 
 @media screen and (max-width: 991px) {

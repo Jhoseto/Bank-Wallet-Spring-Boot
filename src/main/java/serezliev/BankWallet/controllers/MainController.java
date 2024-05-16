@@ -9,9 +9,10 @@ import serezliev.BankWallet.services.UserService;
 import serezliev.BankWallet.view.DepositViewModel;
 import serezliev.BankWallet.view.LoginViewModel;
 import serezliev.BankWallet.view.UserRegistrationViewModel;
+import serezliev.BankWallet.view.WithdrawalViewModel;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
+import java.util.*;
 
 @Controller
 public class MainController {
@@ -36,10 +37,18 @@ public class MainController {
             user.addActionToHistory("");
         }
 
+        if (user != null){
+            List<String> actionHistory = user.getActionHistory();
+            if (actionHistory != null) {
+                model.addAttribute("historyList", actionHistory);
+            }
+            model.addAttribute("user", user);
+        }
+
         model.addAttribute("depositModel", new DepositViewModel());
+        model.addAttribute("withdrawalModel", new WithdrawalViewModel());
         model.addAttribute("loginModel", new LoginViewModel());
         model.addAttribute("registrationModel", new UserRegistrationViewModel());
-        model.addAttribute("user", user);
 
         return "index";
     }

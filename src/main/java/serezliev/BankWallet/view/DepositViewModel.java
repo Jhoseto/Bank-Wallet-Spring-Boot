@@ -2,14 +2,16 @@ package serezliev.BankWallet.view;
 
 public class DepositViewModel {
 
-    private double amount;
+    private double depositAmount;
 
-    public double getAmount() {
-        return amount;
-    }
 
-    public DepositViewModel setAmount(double amount) {
-        this.amount = amount;
+    public DepositViewModel setDepositAmount(double depositAmount) {
+        this.depositAmount = depositAmount;
         return this;
     }
+
+    public double getDepositAmount() {
+        return depositAmount;
+    }
+
 }

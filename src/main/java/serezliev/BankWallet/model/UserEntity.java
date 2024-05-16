@@ -30,6 +30,11 @@ public class UserEntity {
     @Column(name = "action")
     private List<String> actionHistory;
 
+    @ElementCollection
+    @CollectionTable(name = "contact_list", joinColumns = @JoinColumn(name = "user_id"))
+    @Column(name = "contacts")
+    private List<String> contactList;
+
     public Long getId() {
         return id;
     }
@@ -85,6 +90,18 @@ public class UserEntity {
         if (actionHistory == null) {
             actionHistory = new ArrayList<>();
         }
-        actionHistory.add(action);
+        actionHistory.add(0, action);
+    }
+
+    public List<String> getContactList() {
+        return contactList;
+    }
+
+    @Transactional
+    public void addNewContact(String action) {
+        if (contactList == null) {
+            contactList = new ArrayList<>();
+        }
+        contactList.add(0, action);
     }
 }
