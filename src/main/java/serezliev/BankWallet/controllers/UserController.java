@@ -13,6 +13,7 @@ import serezliev.BankWallet.model.UserEntity;
 import serezliev.BankWallet.repositories.UserRepository;
 import serezliev.BankWallet.services.UserService;
 import serezliev.BankWallet.view.LoginViewModel;
+import serezliev.BankWallet.view.MyContactViewModel;
 import serezliev.BankWallet.view.UserRegistrationViewModel;
 
 import javax.servlet.http.HttpServletRequest;
@@ -121,5 +122,30 @@ public class UserController {
                 return "redirect:/index";
             }
         }
+    }
+
+    @PostMapping("/deleteContact")
+    public String deleteContact (@Valid @ModelAttribute("deleteContact") MyContactViewModel contact,
+                                 RedirectAttributes redirectAttributes){
+
+        userService.deleteContact(contact.getContactEmail());
+
+        return "redirect:/index";
+    }
+
+    @PostMapping("/addContact")
+    public String addContact(@Valid @ModelAttribute("addContact") MyContactViewModel contact,
+                             RedirectAttributes redirectAttributes) {
+        Optional<UserEntity> user = userRepository.findByEmail(contact.getContactEmail());
+
+        if (user.isPresent()){
+            userService.addContact(contact.getContactEmail());
+            redirectAttributes.addFlashAttribute("successMessage", contact.getContactEmail()+" Successfully added to your Contact List !");
+        } else {
+            redirectAttributes.addFlashAttribute("error", "The contact you tried to add is not found in our system. " +
+                    "Please add a contact that is registered in our database.");
+        }
+
+        return "redirect:/index";
     }
 }

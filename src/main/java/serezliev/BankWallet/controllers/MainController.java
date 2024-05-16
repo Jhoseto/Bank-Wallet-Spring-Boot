@@ -6,10 +6,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import serezliev.BankWallet.model.UserEntity;
 import serezliev.BankWallet.services.UserService;
-import serezliev.BankWallet.view.DepositViewModel;
-import serezliev.BankWallet.view.LoginViewModel;
-import serezliev.BankWallet.view.UserRegistrationViewModel;
-import serezliev.BankWallet.view.WithdrawalViewModel;
+import serezliev.BankWallet.view.*;
 
 import javax.transaction.Transactional;
 import java.util.*;
@@ -29,6 +26,7 @@ public class MainController {
     }
 
 
+
     @GetMapping("/index")
     @Transactional
     public String getIndex(Model model) {
@@ -42,9 +40,17 @@ public class MainController {
             if (actionHistory != null) {
                 model.addAttribute("historyList", actionHistory);
             }
+
+            List<String> userContactList = user.getContactList();
+            if (userContactList != null){
+                model.addAttribute("contactList", userContactList);
+
+            }
             model.addAttribute("user", user);
         }
 
+        model.addAttribute("addContact", new MyContactViewModel());
+        model.addAttribute("deleteContact", new MyContactViewModel());
         model.addAttribute("depositModel", new DepositViewModel());
         model.addAttribute("withdrawalModel", new WithdrawalViewModel());
         model.addAttribute("loginModel", new LoginViewModel());

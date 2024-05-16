@@ -67,4 +67,18 @@ public class UserServiceImpl implements UserService {
         }
         return null;
     }
+
+    @Override
+    public void deleteContact(String contact){
+        UserEntity user = getCurrentUser();
+        user.getContactList().remove(contact);
+        userRepository.save(user);
+    }
+
+    @Override
+    public void addContact(String contact){
+        UserEntity user = getCurrentUser();
+        user.getContactList().add(contact);
+        userRepository.save(user);
+    }
 }

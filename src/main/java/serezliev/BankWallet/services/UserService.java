@@ -12,4 +12,8 @@ public interface UserService {
     Authentication authenticateUser(String email, String password);
 
     UserEntity getCurrentUser();
+
+    void deleteContact(String contact);
+
+    void addContact(String contact);
 }

@@ -30,7 +30,7 @@ public class UserEntity {
     @Column(name = "action")
     private List<String> actionHistory;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER) // Хибернейт зарежда всеки път контактите заедно с UserEntity (за да се избегне Lazy)
     @CollectionTable(name = "contact_list", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "contacts")
     private List<String> contactList;
@@ -96,6 +96,8 @@ public class UserEntity {
     public List<String> getContactList() {
         return contactList;
     }
+
+
 
     @Transactional
     public void addNewContact(String action) {
