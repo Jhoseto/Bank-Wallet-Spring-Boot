@@ -41,6 +41,10 @@ public class FinanceServiceImpl implements FinanceService {
         user.addActionToHistory(depositAction);
         user.addBalanceHistoryEntry(user.getBalance(),getCurrentDateTimeFormatted());
 
+        // Add balance history entry
+        user.addBalanceHistoryEntry(user.getBalance(), getCurrentDateTimeFormatted());
+
+
         userRepository.save(user);
     }
 
@@ -58,6 +62,9 @@ public class FinanceServiceImpl implements FinanceService {
         String withdrawalAction = "WITHDRAWAL - " + withdrawalAmount + "  $  on   " + getCurrentDateTimeFormatted();
         user.addActionToHistory(withdrawalAction);
 
+        // Add balance history entry
+        user.addBalanceHistoryEntry(user.getBalance(), getCurrentDateTimeFormatted());
+
 
         userRepository.save(user);
     }
@@ -70,15 +77,16 @@ public class FinanceServiceImpl implements FinanceService {
 
         if (findReceiver.isPresent()){
             UserEntity receiver = findReceiver.get();
+
             String sendAction = "SEND - " + amount + "  $  to --->  "+receiver
                     .getEmail()+"("+receiver.getUsername()+")"+"  on   " + getCurrentDateTimeFormatted();
             sender.addActionToHistory(sendAction);
-
+            sender.addBalanceHistoryEntry(sender.getBalance(), getCurrentDateTimeFormatted());
 
             String receiveAction = "RECEIVE - " + amount + "  $  from <--- "+sender
                     .getEmail()+"("+sender.getUsername()+")"+"  on   " + getCurrentDateTimeFormatted();
             receiver.addActionToHistory(receiveAction);
-
+            receiver.addBalanceHistoryEntry(receiver.getBalance(), getCurrentDateTimeFormatted());
 
             userRepository.save(sender);
             userRepository.save(receiver);
@@ -87,7 +95,6 @@ public class FinanceServiceImpl implements FinanceService {
             throw new RuntimeException("Error from sendFunds operation !");
         }
     }
-
 
     public static String getCurrentDateTimeFormatted() {
         LocalDateTime now = LocalDateTime.now();
