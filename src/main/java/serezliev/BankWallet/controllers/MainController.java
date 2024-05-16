@@ -1,10 +1,13 @@
 package serezliev.BankWallet.controllers;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import serezliev.BankWallet.model.BalanceHistoryEntity;
 import serezliev.BankWallet.model.UserEntity;
+import serezliev.BankWallet.repositories.BalanceHistoryRepository;
+import serezliev.BankWallet.services.MapperForBalanceHistory;
 import serezliev.BankWallet.services.UserService;
 import serezliev.BankWallet.view.*;
 
@@ -15,9 +18,12 @@ import java.util.*;
 public class MainController {
 
     private final UserService userService;
+    private final BalanceHistoryRepository balanceHistoryRepository;
 
-    public MainController( UserService userService) {
-        this.userService = userService;;
+    public MainController(UserService userService,
+                          BalanceHistoryRepository balanceHistoryRepository) {
+        this.userService = userService;
+        this.balanceHistoryRepository = balanceHistoryRepository;
     }
 
     @GetMapping("/")
@@ -49,6 +55,7 @@ public class MainController {
             model.addAttribute("user", user);
         }
 
+
         model.addAttribute("sendFundsModel", new SendFundsViewModel());
         model.addAttribute("addContact", new MyContactViewModel());
         model.addAttribute("deleteContact", new MyContactViewModel());
@@ -59,4 +66,20 @@ public class MainController {
 
         return "index";
     }
+
+
+    @Transactional
+    @GetMapping("/balanceHistory")
+    public ResponseEntity<List<BalanceHistoryViewModel>> getBalanceHistory() {
+        UserEntity currentUser = userService.getCurrentUser();
+        if (currentUser != null) {
+            Optional<BalanceHistoryEntity> balanceHistory = userService.getBalanceHistoryForCurrentUser();
+            List<BalanceHistoryViewModel> balanceHistoryDTOs = MapperForBalanceHistory.mapToDTOList(balanceHistory);
+            return ResponseEntity.ok(balanceHistoryDTOs);
+        }
+        return ResponseEntity.notFound().build();
+    }
+
+
+
 }

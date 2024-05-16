@@ -41,10 +41,6 @@ public class FinanceServiceImpl implements FinanceService {
         user.addActionToHistory(depositAction);
         user.addBalanceHistoryEntry(user.getBalance(),getCurrentDateTimeFormatted());
 
-        // Add balance history entry
-        user.addBalanceHistoryEntry(user.getBalance(), getCurrentDateTimeFormatted());
-
-
         userRepository.save(user);
     }
 
@@ -98,7 +94,8 @@ public class FinanceServiceImpl implements FinanceService {
 
     public static String getCurrentDateTimeFormatted() {
         LocalDateTime now = LocalDateTime.now();
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd / HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
         return now.format(formatter);
     }
+
 }

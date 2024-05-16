@@ -8,11 +8,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import serezliev.BankWallet.model.BalanceHistoryEntity;
 import serezliev.BankWallet.model.UserEntity;
+import serezliev.BankWallet.repositories.BalanceHistoryRepository;
 import serezliev.BankWallet.repositories.UserRepository;
 import serezliev.BankWallet.services.UserService;
 import serezliev.BankWallet.view.UserRegistrationViewModel;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -21,13 +24,15 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final UserDetailsService userDetailsService;
+    private final BalanceHistoryRepository balanceHistoryRepository;
 
     public UserServiceImpl(PasswordEncoder passwordEncoder,
                            UserRepository userRepository,
-                           UserDetailsService userDetailsService) {
+                           UserDetailsService userDetailsService, BalanceHistoryRepository balanceHistoryRepository) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.userDetailsService = userDetailsService;
+        this.balanceHistoryRepository = balanceHistoryRepository;
     }
 
     @Override
@@ -85,5 +90,17 @@ public class UserServiceImpl implements UserService {
         UserEntity user = getCurrentUser();
         user.addNewContact(contact);
         userRepository.save(user);
+    }
+
+
+    @Override
+    @Transactional(readOnly = true) // Помощна анотация за управление на транзакцията
+    public Optional<BalanceHistoryEntity> getBalanceHistoryForCurrentUser() {
+        UserEntity currentUser = getCurrentUser();
+        if (currentUser != null) {
+            Optional<BalanceHistoryEntity> balanceHistory = balanceHistoryRepository.findById(currentUser.getId());
+            return balanceHistory;
+        }
+        return Optional.empty(); 
     }
 }

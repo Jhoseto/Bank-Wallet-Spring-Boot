@@ -2,9 +2,10 @@ package serezliev.BankWallet.model;
 
 import javax.persistence.*;
 import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Entity
-public class BalanceHistoryEntry {
+public class BalanceHistoryEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -17,45 +18,51 @@ public class BalanceHistoryEntry {
     private Double balanceAmount;
 
     @Column
-    private Instant dateAndTime;
+    private LocalDateTime dateAndTime;
 
-    public BalanceHistoryEntry() {
-    }
+    @Column
+    private String email;
 
 
+    // Гетъри и сетъри
     public Long getId() {
         return id;
     }
 
-    public BalanceHistoryEntry setId(Long id) {
+    public void setId(Long id) {
         this.id = id;
-        return this;
     }
 
     public UserEntity getUser() {
         return user;
     }
 
-    public BalanceHistoryEntry setUser(UserEntity user) {
+    public void setUser(UserEntity user) {
         this.user = user;
-        return this;
     }
 
     public Double getBalanceAmount() {
         return balanceAmount;
     }
 
-    public BalanceHistoryEntry setBalanceAmount(Double balanceAmount) {
+    public void setBalanceAmount(Double balanceAmount) {
         this.balanceAmount = balanceAmount;
-        return this;
     }
 
-    public Instant getDateAndTime() {
+    public LocalDateTime  getDateAndTime() {
         return dateAndTime;
     }
 
-    public BalanceHistoryEntry setDateAndTime(Instant dateAndTime) {
+    public void setDateAndTime(LocalDateTime  dateAndTime) {
         this.dateAndTime = dateAndTime;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public BalanceHistoryEntity setEmail(String email) {
+        this.email = email;
         return this;
     }
 }

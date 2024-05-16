@@ -815,6 +815,10 @@
   overflow: visible;
 }
 
+.div-block-4._23 {
+  overflow: auto;
+}
+
 .messageblock {
   background-color: rgba(255, 255, 255, .63);
   border-radius: 12px;

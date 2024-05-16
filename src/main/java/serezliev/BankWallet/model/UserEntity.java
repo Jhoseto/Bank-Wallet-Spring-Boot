@@ -4,7 +4,9 @@ import org.hibernate.Hibernate;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
-import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,7 +39,7 @@ public class UserEntity {
     private List<String> contactList;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<BalanceHistoryEntry> balanceHistory;
+    private List<BalanceHistoryEntity> balanceHistory;
 
 
     public UserEntity() {
@@ -119,15 +121,22 @@ public class UserEntity {
 
     @Transactional
     public void addBalanceHistoryEntry(Double balanceAmount, String dateTime) {
-        BalanceHistoryEntry entry = new BalanceHistoryEntry();
+        BalanceHistoryEntity entry = new BalanceHistoryEntity();
         entry.setBalanceAmount(balanceAmount);
-        entry.setDateAndTime(Instant.parse(dateTime));
+
+        // Парсване на датата и времето със същия формат "yyyy-MM-dd HH:mm:ss"
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime  instant = LocalDateTime.from(LocalDateTime.parse(dateTime, formatter).atZone(ZoneId.systemDefault()).toInstant());
+        entry.setDateAndTime(instant);
+
         entry.setUser(this);
+
         if (balanceHistory == null) {
             balanceHistory = new ArrayList<>();
         }
         balanceHistory.add(entry);
     }
+
 
     public UserEntity setActionHistory(List<String> actionHistory) {
         this.actionHistory = actionHistory;
@@ -139,11 +148,13 @@ public class UserEntity {
         return this;
     }
 
-    public List<BalanceHistoryEntry> getBalanceHistory() {
+    @Transactional
+    public List<BalanceHistoryEntity> getBalanceHistory() {
+        Hibernate.initialize(balanceHistory);
         return balanceHistory;
     }
 
-    public UserEntity setBalanceHistory(List<BalanceHistoryEntry> balanceHistory) {
+    public UserEntity setBalanceHistory(List<BalanceHistoryEntity> balanceHistory) {
         this.balanceHistory = balanceHistory;
         return this;
     }

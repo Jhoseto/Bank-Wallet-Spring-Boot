@@ -50,11 +50,7 @@ public class ApplicationSecurityConfiguration extends WebSecurityConfigurerAdapt
                 .permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .logout()
-                .logoutUrl("/user/logout")
-                .logoutSuccessUrl("/index")
 
-                .and()
                 .rememberMe() // Remember me functionality
                 .key(rememberMeKey()) // Unique key for remember me
 
