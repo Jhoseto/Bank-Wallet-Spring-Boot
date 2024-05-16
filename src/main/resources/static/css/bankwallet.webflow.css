@@ -736,6 +736,10 @@
   top: 110px;
 }
 
+.container-3.balansegraph {
+  overflow: visible;
+}
+
 .heading-2 {
   color: var(--sdfhg);
   margin-top: 10px;
@@ -808,7 +812,7 @@
   margin-bottom: 10px;
   margin-left: 10px;
   margin-right: 10px;
-  overflow: auto;
+  overflow: visible;
 }
 
 .messageblock {

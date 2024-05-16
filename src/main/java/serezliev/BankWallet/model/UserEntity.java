@@ -4,6 +4,7 @@ import org.hibernate.Hibernate;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,6 +35,15 @@ public class UserEntity {
     @CollectionTable(name = "contact_list", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "contacts")
     private List<String> contactList;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<BalanceHistoryEntry> balanceHistory;
+
+
+    public UserEntity() {
+
+    }
+
 
     public Long getId() {
         return id;
@@ -105,5 +115,36 @@ public class UserEntity {
             contactList = new ArrayList<>();
         }
         contactList.add(0, action);
+    }
+
+    @Transactional
+    public void addBalanceHistoryEntry(Double balanceAmount, String dateTime) {
+        BalanceHistoryEntry entry = new BalanceHistoryEntry();
+        entry.setBalanceAmount(balanceAmount);
+        entry.setDateAndTime(Instant.parse(dateTime));
+        entry.setUser(this);
+        if (balanceHistory == null) {
+            balanceHistory = new ArrayList<>();
+        }
+        balanceHistory.add(entry);
+    }
+
+    public UserEntity setActionHistory(List<String> actionHistory) {
+        this.actionHistory = actionHistory;
+        return this;
+    }
+
+    public UserEntity setContactList(List<String> contactList) {
+        this.contactList = contactList;
+        return this;
+    }
+
+    public List<BalanceHistoryEntry> getBalanceHistory() {
+        return balanceHistory;
+    }
+
+    public UserEntity setBalanceHistory(List<BalanceHistoryEntry> balanceHistory) {
+        this.balanceHistory = balanceHistory;
+        return this;
     }
 }

@@ -7,6 +7,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import serezliev.BankWallet.services.FinanceService;
 import serezliev.BankWallet.services.UserService;
 import serezliev.BankWallet.view.DepositViewModel;
+import serezliev.BankWallet.view.SendFundsViewModel;
 import serezliev.BankWallet.view.WithdrawalViewModel;
 
 import javax.validation.Valid;
@@ -43,5 +44,12 @@ public class OperationsController {
         return "redirect:/index";
     }
 
+    @PostMapping("/send")
+    public String sendFunds (@Valid @ModelAttribute("sendFundsModel") SendFundsViewModel sendFundsViewModel,
+                              RedirectAttributes redirectAttributes){
 
+        financeService.sendFunds(sendFundsViewModel.getReceiverEmail(), sendFundsViewModel.getAmount());
+
+        return "redirect:/index";
+    }
 }

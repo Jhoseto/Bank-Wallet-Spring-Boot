@@ -10,12 +10,12 @@ import serezliev.BankWallet.services.UserService;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Optional;
 
 
 @Service
 public class FinanceServiceImpl implements FinanceService {
 
-    private static final String DATE_TIME_FORMAT = "yyyy-MM-dd HH:mm:ss";
     private final UserRepository userRepository;
     private final UserService userService;
 
@@ -39,6 +39,7 @@ public class FinanceServiceImpl implements FinanceService {
         // Add deposit action to history
         String depositAction = "DEPOSIT - " + depositAmount + "  $  on   " + getCurrentDateTimeFormatted();
         user.addActionToHistory(depositAction);
+        user.addBalanceHistoryEntry(user.getBalance(),getCurrentDateTimeFormatted());
 
         userRepository.save(user);
     }
@@ -57,7 +58,34 @@ public class FinanceServiceImpl implements FinanceService {
         String withdrawalAction = "WITHDRAWAL - " + withdrawalAmount + "  $  on   " + getCurrentDateTimeFormatted();
         user.addActionToHistory(withdrawalAction);
 
+
         userRepository.save(user);
+    }
+
+    @Override
+    @Transactional
+    public void sendFunds(String contact, double amount) {
+        UserEntity sender = userService.getCurrentUser();
+        Optional<UserEntity> findReceiver = userRepository.findByEmail(contact);
+
+        if (findReceiver.isPresent()){
+            UserEntity receiver = findReceiver.get();
+            String sendAction = "SEND - " + amount + "  $  to --->  "+receiver
+                    .getEmail()+"("+receiver.getUsername()+")"+"  on   " + getCurrentDateTimeFormatted();
+            sender.addActionToHistory(sendAction);
+
+
+            String receiveAction = "RECEIVE - " + amount + "  $  from <--- "+sender
+                    .getEmail()+"("+sender.getUsername()+")"+"  on   " + getCurrentDateTimeFormatted();
+            receiver.addActionToHistory(receiveAction);
+
+
+            userRepository.save(sender);
+            userRepository.save(receiver);
+
+        } else {
+            throw new RuntimeException("Error from sendFunds operation !");
+        }
     }
 
 

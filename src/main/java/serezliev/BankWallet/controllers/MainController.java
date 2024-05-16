@@ -49,6 +49,7 @@ public class MainController {
             model.addAttribute("user", user);
         }
 
+        model.addAttribute("sendFundsModel", new SendFundsViewModel());
         model.addAttribute("addContact", new MyContactViewModel());
         model.addAttribute("deleteContact", new MyContactViewModel());
         model.addAttribute("depositModel", new DepositViewModel());

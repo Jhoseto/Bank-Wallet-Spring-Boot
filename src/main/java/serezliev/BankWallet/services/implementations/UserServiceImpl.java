@@ -83,7 +83,7 @@ public class UserServiceImpl implements UserService {
     @Transactional
     public void addContact(String contact){
         UserEntity user = getCurrentUser();
-        user.getContactList().add(contact);
+        user.addNewContact(contact);
         userRepository.save(user);
     }
 }
