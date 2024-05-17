@@ -4,6 +4,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.client.RestTemplate;
 import serezliev.BankWallet.model.BalanceHistoryEntity;
 import serezliev.BankWallet.model.UserEntity;
 import serezliev.BankWallet.repositories.BalanceHistoryRepository;
@@ -81,5 +82,11 @@ public class MainController {
     }
 
 
-
+    @GetMapping("/currencyRates")
+    public Object getCurrencyRates() {
+        String apiUrl = "https://api.exchangeratesapi.io/latest";
+        RestTemplate restTemplate = new RestTemplate();
+        Object response = restTemplate.getForObject(apiUrl, Object.class);
+        return response;
+    }
 }

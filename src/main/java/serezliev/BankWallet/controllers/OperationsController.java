@@ -47,8 +47,11 @@ public class OperationsController {
     @PostMapping("/send")
     public String sendFunds (@Valid @ModelAttribute("sendFundsModel") SendFundsViewModel sendFundsViewModel,
                               RedirectAttributes redirectAttributes){
-
-        financeService.sendFunds(sendFundsViewModel.getReceiverEmail(), sendFundsViewModel.getAmount());
+        if (sendFundsViewModel.getAmount() <= userService.getCurrentUser().getBalance()){
+            financeService.sendFunds(sendFundsViewModel.getReceiverEmail(), sendFundsViewModel.getAmount());
+        } else {
+            redirectAttributes.addFlashAttribute("error", "Not enough funds for transfer operation !");
+        }
 
         return "redirect:/index";
     }

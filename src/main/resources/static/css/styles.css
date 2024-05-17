@@ -30,3 +30,12 @@
     color: #00ab46;
     font-size: 16px;
 }
+
+.fade {
+    opacity: 1;
+    transition: opacity 2s ease-in-out; /* Променено на 2 секунди */
+}
+
+.fade-out {
+    opacity: 0;
+}

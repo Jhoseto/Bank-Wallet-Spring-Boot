@@ -145,13 +145,19 @@ public class UserController {
         Optional<UserEntity> user = userRepository.findByEmail(contact.getContactEmail());
 
         if (user.isPresent()){
-            if (!user.get().getContactList().contains(contact.getContactEmail())){
+            if (!userService.getCurrentUser().getContactList().contains(contact.getContactEmail())){
+                if (userService.getCurrentUser().getEmail().equals(contact.getContactEmail())){
+                    redirectAttributes.addFlashAttribute("error", "Error for "+contact.getContactEmail()+" You cannot add your own email !");
+                    return "redirect:/index";
+                }
+
                 userService.addContact(contact.getContactEmail());
                 redirectAttributes.addFlashAttribute("successMessage", contact.getContactEmail()+" Successfully added to your Contact List !");
             } else {
                 redirectAttributes.addFlashAttribute("error", contact.getContactEmail()+" is already added in your Contact List !");
                 return "redirect:/index";
             }
+
 
         } else {
             redirectAttributes.addFlashAttribute("error", "The contact you tried to add is not found in our system. " +
