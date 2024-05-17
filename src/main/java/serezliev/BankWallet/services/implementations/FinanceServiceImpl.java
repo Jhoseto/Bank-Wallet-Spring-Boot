@@ -39,7 +39,7 @@ public class FinanceServiceImpl implements FinanceService {
         // Add deposit action to history
         String depositAction = "DEPOSIT - " + depositAmount + "  $  on   " + getCurrentDateTimeFormatted();
         user.addActionToHistory(depositAction);
-        user.addBalanceHistoryEntry(user.getBalance(),getCurrentDateTimeFormatted());
+        user.addBalanceHistory(user.getBalance(),getCurrentDateTimeFormatted());
 
         userRepository.save(user);
     }
@@ -59,7 +59,7 @@ public class FinanceServiceImpl implements FinanceService {
         user.addActionToHistory(withdrawalAction);
 
         // Add balance history entry
-        user.addBalanceHistoryEntry(user.getBalance(), getCurrentDateTimeFormatted());
+        user.addBalanceHistory(user.getBalance(), getCurrentDateTimeFormatted());
 
 
         userRepository.save(user);
@@ -76,13 +76,15 @@ public class FinanceServiceImpl implements FinanceService {
 
             String sendAction = "SEND - " + amount + "  $  to --->  "+receiver
                     .getEmail()+"("+receiver.getUsername()+")"+"  on   " + getCurrentDateTimeFormatted();
+            sender.setBalance(sender.getBalance() - amount);
             sender.addActionToHistory(sendAction);
-            sender.addBalanceHistoryEntry(sender.getBalance(), getCurrentDateTimeFormatted());
+            sender.addBalanceHistory(sender.getBalance(), getCurrentDateTimeFormatted());
 
             String receiveAction = "RECEIVE - " + amount + "  $  from <--- "+sender
                     .getEmail()+"("+sender.getUsername()+")"+"  on   " + getCurrentDateTimeFormatted();
+            receiver.setBalance(receiver.getBalance() + amount);
             receiver.addActionToHistory(receiveAction);
-            receiver.addBalanceHistoryEntry(receiver.getBalance(), getCurrentDateTimeFormatted());
+            receiver.addBalanceHistory(receiver.getBalance(), getCurrentDateTimeFormatted());
 
             userRepository.save(sender);
             userRepository.save(receiver);
@@ -92,6 +94,7 @@ public class FinanceServiceImpl implements FinanceService {
         }
     }
 
+    
     public static String getCurrentDateTimeFormatted() {
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");

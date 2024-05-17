@@ -18,10 +18,7 @@ public class BalanceHistoryEntity {
     private Double balanceAmount;
 
     @Column
-    private LocalDateTime dateAndTime;
-
-    @Column
-    private String email;
+    private Instant dateAndTime;
 
 
     // Гетъри и сетъри
@@ -49,20 +46,12 @@ public class BalanceHistoryEntity {
         this.balanceAmount = balanceAmount;
     }
 
-    public LocalDateTime  getDateAndTime() {
+    public Instant  getDateAndTime() {
         return dateAndTime;
     }
 
-    public void setDateAndTime(LocalDateTime  dateAndTime) {
+    public void setDateAndTime(Instant  dateAndTime) {
         this.dateAndTime = dateAndTime;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public BalanceHistoryEntity setEmail(String email) {
-        this.email = email;
-        return this;
-    }
 }

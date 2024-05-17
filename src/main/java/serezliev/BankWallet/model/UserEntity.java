@@ -2,8 +2,10 @@ package serezliev.BankWallet.model;
 
 import org.hibernate.Hibernate;
 import org.springframework.transaction.annotation.Transactional;
+import serezliev.BankWallet.repositories.UserRepository;
 
 import javax.persistence.*;
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
@@ -120,13 +122,13 @@ public class UserEntity {
     }
 
     @Transactional
-    public void addBalanceHistoryEntry(Double balanceAmount, String dateTime) {
+    public void addBalanceHistory(Double balanceAmount, String dateTime) {
         BalanceHistoryEntity entry = new BalanceHistoryEntity();
         entry.setBalanceAmount(balanceAmount);
 
-        // Парсване на датата и времето със същия формат "yyyy-MM-dd HH:mm:ss"
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
-        LocalDateTime  instant = LocalDateTime.from(LocalDateTime.parse(dateTime, formatter).atZone(ZoneId.systemDefault()).toInstant());
+        LocalDateTime localDateTime = LocalDateTime.parse(dateTime, formatter);
+        Instant instant = localDateTime.atZone(ZoneId.systemDefault()).toInstant();
         entry.setDateAndTime(instant);
 
         entry.setUser(this);
