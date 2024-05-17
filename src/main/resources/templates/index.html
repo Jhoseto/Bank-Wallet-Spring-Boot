@@ -124,6 +124,7 @@
                                type="email" required="">
                         <input type="submit" data-wait="Please wait..." class="submit-button w-button" value="Add Contact">
                       </form>
+                    </div>
                     <div data-w-id="509965bd-cc53-bc55-727b-297dca5f47a9" style="opacity:0" class="form-block w-form">
                       <form id="wf-form-myContactForm" name="wf-form-registrationForm" data-name="registrationForm"
                             method="post"
@@ -138,7 +139,6 @@
                         </select>
                         <input type="submit" data-wait="Please wait..." class="submit-button w-button" value="Delete Contact">
                       </form>
-                    </div>
                     </div>
                   </nav>
                 </div>
@@ -229,17 +229,17 @@
       </div>
     </div>
     <h1 class="heading-3" th:text="${@userServiceImpl.getCurrentUser()?.getUsername() != null ? @userServiceImpl.getCurrentUser().getUsername()+' Wallet' : 'Live Wallet'}" >Live Wallet</h1>
-    <div class="w-layout-blockcontainer container-3 w-container" th:if="${#authorization.expression('isAuthenticated()')}">
-      <h1 class="heading-2">Account history</h1>
-      <div class="div-block-4 _23">
-        <div th:each="action : ${historyList}" class="history-block">
-          <div th:text="${action}" class="action-box"></div>
+    <div class="div-block-6">
+      <div class="w-layout-blockcontainer container-3 w-container" th:if="${#authorization.expression('isAuthenticated()')}">
+        <div class="div-block-4 _23">
+          <h1 class="heading-2">Account history</h1>
+          <div th:each="action : ${historyList}" class="history-block">
+            <div th:text="${action}" class="action-box"></div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="div-block-5">
-      <div class="w-layout-blockcontainer container-3 balansegraph w-container">
-        <div class="div-block-4">
+      <div class="w-layout-blockcontainer container-3 balansegraph _1 w-container">
+        <div class="div-block-4 _1">
           <h1 class="heading-2">Balance History</h1>
           <canvas id="balanceChart"></canvas>
         </div>

@@ -94,13 +94,14 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    @Transactional(readOnly = true) // Помощна анотация за управление на транзакцията
-    public Optional<BalanceHistoryEntity> getBalanceHistoryForCurrentUser() {
+    @Transactional
+    public List<BalanceHistoryEntity> getBalanceHistoryForCurrentUser() {
         UserEntity currentUser = getCurrentUser();
         if (currentUser != null) {
-            Optional<BalanceHistoryEntity> balanceHistory = balanceHistoryRepository.findById(currentUser.getId());
+            List<BalanceHistoryEntity> balanceHistory =currentUser.getBalanceHistory().stream().toList();
+
             return balanceHistory;
         }
-        return Optional.empty(); 
+        return null;
     }
 }

@@ -73,7 +73,7 @@ public class MainController {
     public ResponseEntity<List<BalanceHistoryViewModel>> getBalanceHistory() {
         UserEntity currentUser = userService.getCurrentUser();
         if (currentUser != null) {
-            Optional<BalanceHistoryEntity> balanceHistory = userService.getBalanceHistoryForCurrentUser();
+            List<BalanceHistoryEntity> balanceHistory = userService.getBalanceHistoryForCurrentUser();
             List<BalanceHistoryViewModel> balanceHistoryDTOs = MapperForBalanceHistory.mapToDTOList(balanceHistory);
             return ResponseEntity.ok(balanceHistoryDTOs);
         }

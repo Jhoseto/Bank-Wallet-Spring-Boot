@@ -6,7 +6,7 @@ import serezliev.BankWallet.model.BalanceHistoryEntity;
 import serezliev.BankWallet.model.UserEntity;
 import serezliev.BankWallet.view.UserRegistrationViewModel;
 
-import java.util.Optional;
+import java.util.List;
 
 public interface UserService {
 
@@ -22,5 +22,5 @@ public interface UserService {
     void addContact(String contact);
 
     @Transactional(readOnly = true)
-    Optional<BalanceHistoryEntity> getBalanceHistoryForCurrentUser();
+    List<BalanceHistoryEntity> getBalanceHistoryForCurrentUser();
 }
