@@ -1,5 +1,6 @@
 package serezliev.BankWallet.controllers;
 
+import com.sun.nio.sctp.Notification;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -9,6 +10,7 @@ import serezliev.BankWallet.model.BalanceHistoryEntity;
 import serezliev.BankWallet.model.UserEntity;
 import serezliev.BankWallet.repositories.BalanceHistoryRepository;
 import serezliev.BankWallet.services.MapperForBalanceHistory;
+import serezliev.BankWallet.services.NotificationService;
 import serezliev.BankWallet.services.UserService;
 import serezliev.BankWallet.view.*;
 
@@ -19,12 +21,13 @@ import java.util.*;
 public class MainController {
 
     private final UserService userService;
-    private final BalanceHistoryRepository balanceHistoryRepository;
+    private final NotificationService notificationService;
+
 
     public MainController(UserService userService,
-                          BalanceHistoryRepository balanceHistoryRepository) {
+                          NotificationService notificationService) {
         this.userService = userService;
-        this.balanceHistoryRepository = balanceHistoryRepository;
+        this.notificationService = notificationService;
     }
 
     @GetMapping("/")
@@ -53,10 +56,13 @@ public class MainController {
                 model.addAttribute("contactList", userContactList);
 
             }
-            List<String> userNotificationsList = userService.getNotifications();
+            List<NotificationViewModel> userNotificationsList = notificationService.getNotifications();
+            if (userNotificationsList != null) {
+                Collections.reverse(userNotificationsList);
+                model.addAttribute("notificationList", userNotificationsList);
+            }
             model.addAttribute("user", user);
         }
-
 
         model.addAttribute("sendFundsModel", new SendFundsViewModel());
         model.addAttribute("addContact", new MyContactViewModel());
@@ -82,12 +88,4 @@ public class MainController {
         return ResponseEntity.notFound().build();
     }
 
-
-    @GetMapping("/currencyRates")
-    public Object getCurrencyRates() {
-        String apiUrl = "https://api.exchangeratesapi.io/latest";
-        RestTemplate restTemplate = new RestTemplate();
-        Object response = restTemplate.getForObject(apiUrl, Object.class);
-        return response;
-    }
 }

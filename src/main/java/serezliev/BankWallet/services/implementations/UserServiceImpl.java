@@ -10,12 +10,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import serezliev.BankWallet.model.BalanceHistoryEntity;
 import serezliev.BankWallet.model.UserEntity;
-import serezliev.BankWallet.repositories.BalanceHistoryRepository;
 import serezliev.BankWallet.repositories.UserRepository;
 import serezliev.BankWallet.services.UserService;
 import serezliev.BankWallet.view.UserRegistrationViewModel;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,15 +23,13 @@ public class UserServiceImpl implements UserService {
     private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final UserDetailsService userDetailsService;
-    private final BalanceHistoryRepository balanceHistoryRepository;
 
     public UserServiceImpl(PasswordEncoder passwordEncoder,
                            UserRepository userRepository,
-                           UserDetailsService userDetailsService, BalanceHistoryRepository balanceHistoryRepository) {
+                           UserDetailsService userDetailsService) {
         this.passwordEncoder = passwordEncoder;
         this.userRepository = userRepository;
         this.userDetailsService = userDetailsService;
-        this.balanceHistoryRepository = balanceHistoryRepository;
     }
 
     @Override
@@ -106,17 +102,4 @@ public class UserServiceImpl implements UserService {
         return null;
     }
 
-    @Override
-    public List<String> getNotifications() {
-        List<String> user = getCurrentUser().getActionHistory();
-        List<String> notifications = new ArrayList<>();
-        for (String currentString : user) {
-            String[] checkActions = currentString.split(" ");
-
-            if (checkActions[0].equals("RECEIVE")){
-                notifications.add(0, currentString);
-            }
-        }
-        return notifications;
-    }
 }

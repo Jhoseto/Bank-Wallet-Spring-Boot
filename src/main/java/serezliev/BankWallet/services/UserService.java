@@ -4,6 +4,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.transaction.annotation.Transactional;
 import serezliev.BankWallet.model.BalanceHistoryEntity;
 import serezliev.BankWallet.model.UserEntity;
+import serezliev.BankWallet.view.NotificationViewModel;
 import serezliev.BankWallet.view.UserRegistrationViewModel;
 
 import java.util.List;
@@ -24,5 +25,4 @@ public interface UserService {
     @Transactional(readOnly = true)
     List<BalanceHistoryEntity> getBalanceHistoryForCurrentUser();
 
-    List<String>getNotifications();
 }

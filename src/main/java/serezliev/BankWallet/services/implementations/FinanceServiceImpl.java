@@ -3,6 +3,7 @@ package serezliev.BankWallet.services.implementations;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import serezliev.BankWallet.configurations.WebSocketConfig;
 import serezliev.BankWallet.model.UserEntity;
 import serezliev.BankWallet.repositories.UserRepository;
 import serezliev.BankWallet.services.FinanceService;
@@ -18,12 +19,16 @@ public class FinanceServiceImpl implements FinanceService {
 
     private final UserRepository userRepository;
     private final UserService userService;
+    private final WebSocketConfig webSocketConfig;
+
 
     @Autowired
     public FinanceServiceImpl(UserRepository userRepository,
-                              UserService userService) {
+                              UserService userService,
+                              WebSocketConfig webSocketConfig) {
         this.userRepository = userRepository;
         this.userService = userService;
+        this.webSocketConfig = webSocketConfig;
     }
 
 
@@ -89,6 +94,8 @@ public class FinanceServiceImpl implements FinanceService {
 
             userRepository.save(sender);
             userRepository.save(receiver);
+
+            webSocketConfig.notifyRecipient(receiver);
 
         } else {
             throw new RuntimeException("Error from sendFunds operation !");

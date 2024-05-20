@@ -26,7 +26,7 @@
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/stomp.js/2.3.3/stomp.min.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/sockjs-client/1.5.1/sockjs.min.js"></script>
-
+  <script src="/js/notification.js" type="text/javascript"></script>
   <link href="images/favicon.ico" rel="shortcut icon" type="image/x-icon">
   <link href="images/webclip.png" rel="apple-touch-icon">
 </head>
@@ -199,19 +199,22 @@
                   </nav>
                 </div>
               </div>
-              <div  th:if="${#authorization.expression('isAuthenticated()')}" data-delay="0" data-hover="false" data-w-id="26b1cb78-57a0-5042-a214-40015a2415b8" class="uui-navbar07_menu-dropdown register not w-dropdown">
-                <div  class="uui-navbar07_dropdown-toggle _22 _3 w-dropdown-toggle" ><img src="images/6610575.png" loading="lazy" width="34" sizes="(max-width: 991px) 100vw, 3vw" alt="" srcset="images/6610575.png 500w, images/6610575.png 512w" class="image">
-                  <div data-w-id="e7b9ea0b-e50d-94a9-8d46-bc0df0a300ad" class="div-block-8">
+              <div data-delay="0" data-hover="false" id="notification" data-w-id="26b1cb78-57a0-5042-a214-40015a2415b8" class="uui-navbar07_menu-dropdown register not w-dropdown">
+                <div th:if="${#authorization.expression('isAuthenticated()')}" class="uui-navbar07_dropdown-toggle _22 _3 w-dropdown-toggle">
+                  <img src="images/6610575.png" loading="lazy" width="34" sizes="(max-width: 991px) 100vw, 3vw" alt="" srcset="images/6610575.png 500w, images/6610575.png 512w" class="image">
+                  <div th:if="${user.getNotificationsCount() > 0}" th:text="${user.getNotificationsCount()}" id="notificationCount" data-w-id="e7b9ea0b-e50d-94a9-8d46-bc0df0a300ad" class="div-block-8">
                     <div class="text-block-5">12</div>
                   </div>
                 </div>
                 <nav  class="uui-navbar07_dropdown-list not w-dropdown-list">
                   <div class="div-block-9">
-                    <h1  class="heading-5">Notifications</h1>
-                    <div th:each="notification : ${notificationList}" class="notification-block">
-                      <div th:text="${notification}" class="div-block-10">
-                        <h1 class="heading-4">Heading</h1>
-                        <div class="text-block-6">notification text</div>
+                    <h1 class="heading-5">Notifications</h1>
+                    <div id="notifications">
+                      <div th:each="notification : ${notificationList}" class="notification-block">
+                        <div class="div-block-10">
+                          <h1 th:text="${notification.header}" class="heading-4">Heading</h1>
+                          <div th:text="${notification.message}" class="text-block-6">notification text</div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -300,6 +303,21 @@
     hideMessages();
   });
 
-</script>
+
+  var element = document.getElementById('notification');
+  element.addEventListener('click', function() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "/notifications/markAsRead", true);
+    xhr.send();
+  });
+
+  element.addEventListener('click', function() {
+    var notificationCountElement = document.querySelector('.div-block-8');
+    notificationCountElement.style.display = 'none';
+
+  });
+
+
+  </script>
 </body>
 </html>
