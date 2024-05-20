@@ -15,6 +15,7 @@ import serezliev.BankWallet.repositories.UserRepository;
 import serezliev.BankWallet.services.UserService;
 import serezliev.BankWallet.view.UserRegistrationViewModel;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -103,5 +104,19 @@ public class UserServiceImpl implements UserService {
             return balanceHistory;
         }
         return null;
+    }
+
+    @Override
+    public List<String> getNotifications() {
+        List<String> user = getCurrentUser().getActionHistory();
+        List<String> notifications = new ArrayList<>();
+        for (String currentString : user) {
+            String[] checkActions = currentString.split(" ");
+
+            if (checkActions[0].equals("RECEIVE")){
+                notifications.add(0, currentString);
+            }
+        }
+        return notifications;
     }
 }

@@ -23,4 +23,6 @@ public interface UserService {
 
     @Transactional(readOnly = true)
     List<BalanceHistoryEntity> getBalanceHistoryForCurrentUser();
+
+    List<String>getNotifications();
 }

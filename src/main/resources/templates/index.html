@@ -199,6 +199,24 @@
                   </nav>
                 </div>
               </div>
+              <div  th:if="${#authorization.expression('isAuthenticated()')}" data-delay="0" data-hover="false" data-w-id="26b1cb78-57a0-5042-a214-40015a2415b8" class="uui-navbar07_menu-dropdown register not w-dropdown">
+                <div  class="uui-navbar07_dropdown-toggle _22 _3 w-dropdown-toggle" ><img src="images/6610575.png" loading="lazy" width="34" sizes="(max-width: 991px) 100vw, 3vw" alt="" srcset="images/6610575.png 500w, images/6610575.png 512w" class="image">
+                  <div data-w-id="e7b9ea0b-e50d-94a9-8d46-bc0df0a300ad" class="div-block-8">
+                    <div class="text-block-5">12</div>
+                  </div>
+                </div>
+                <nav  class="uui-navbar07_dropdown-list not w-dropdown-list">
+                  <div class="div-block-9">
+                    <h1  class="heading-5">Notifications</h1>
+                    <div th:each="notification : ${notificationList}" class="notification-block">
+                      <div th:text="${notification}" class="div-block-10">
+                        <h1 class="heading-4">Heading</h1>
+                        <div class="text-block-6">notification text</div>
+                      </div>
+                    </div>
+                  </div>
+                </nav>
+              </div>
               <form id="logout-form" th:action="@{/user/logout}" method="post" style="display: none;">
                 <input type="submit" value="Logout" />
               </form>

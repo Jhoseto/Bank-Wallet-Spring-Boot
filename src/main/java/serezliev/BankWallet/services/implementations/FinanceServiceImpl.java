@@ -83,6 +83,7 @@ public class FinanceServiceImpl implements FinanceService {
             String receiveAction = "RECEIVE - " + amount + "  $  from <--- "+sender
                     .getEmail()+"("+sender.getUsername()+")"+"  on   " + getCurrentDateTimeFormatted();
             receiver.setBalance(receiver.getBalance() + amount);
+            receiver.setNotificationsCount(receiver.getNotificationsCount()+1);
             receiver.addActionToHistory(receiveAction);
             receiver.addBalanceHistory(receiver.getBalance(), getCurrentDateTimeFormatted());
 

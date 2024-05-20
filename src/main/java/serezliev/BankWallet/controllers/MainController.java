@@ -53,6 +53,7 @@ public class MainController {
                 model.addAttribute("contactList", userContactList);
 
             }
+            List<String> userNotificationsList = userService.getNotifications();
             model.addAttribute("user", user);
         }
 

@@ -30,6 +30,9 @@ public class UserEntity {
     @Column
     private double balance;
 
+    @Column
+    private int notificationsCount;
+
     @ElementCollection
     @CollectionTable(name = "action_history", joinColumns = @JoinColumn(name = "user_id"))
     @Column(name = "action")
@@ -158,6 +161,15 @@ public class UserEntity {
 
     public UserEntity setBalanceHistory(List<BalanceHistoryEntity> balanceHistory) {
         this.balanceHistory = balanceHistory;
+        return this;
+    }
+
+    public int getNotificationsCount() {
+        return notificationsCount;
+    }
+
+    public UserEntity setNotificationsCount(int notificationsCount) {
+        this.notificationsCount = notificationsCount;
         return this;
     }
 }
