@@ -7,4 +7,5 @@ public interface FinanceService {
     void withdrawal(double amount);
 
     void sendFunds(String contact, double amount);
+
 }
