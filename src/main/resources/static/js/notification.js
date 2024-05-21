@@ -33,6 +33,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 .then(response => {
                     if (response.ok) {
                         notificationCountElementBlock.style.display = 'none';
+                        if (notificationCountElementBlock.innerText > 0){
+                            location.reload()
+                        }
+
                     } else {
                         console.error('Error marking notifications as read');
                     }
@@ -45,3 +49,4 @@ document.addEventListener('DOMContentLoaded', function() {
         console.error('Element with id "notification" or ".div-block-8" not found');
     }
 });
+
