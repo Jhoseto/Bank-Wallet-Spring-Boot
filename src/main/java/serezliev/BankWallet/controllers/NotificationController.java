@@ -22,7 +22,7 @@ public class NotificationController {
     @GetMapping("/notifications/markAsRead")
     public String markAsRead() {
         UserEntity user = userService.getCurrentUser();
-        if (user != null && user.getNotificationsCount() != 0) {
+        if (user != null) {
             notificationService.markNotificationAsRead();
         }
         return "redirect:/index";

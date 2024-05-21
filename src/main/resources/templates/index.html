@@ -202,8 +202,8 @@
               <div data-delay="0" data-hover="false" id="notification" data-w-id="26b1cb78-57a0-5042-a214-40015a2415b8" class="uui-navbar07_menu-dropdown register not w-dropdown">
                 <div th:if="${#authorization.expression('isAuthenticated()')}" class="uui-navbar07_dropdown-toggle _22 _3 w-dropdown-toggle">
                   <img src="images/6610575.png" loading="lazy" width="34" sizes="(max-width: 991px) 100vw, 3vw" alt="" srcset="images/6610575.png 500w, images/6610575.png 512w" class="image">
-                  <div th:if="${user.getNotificationsCount() > 0}" th:text="${user.getNotificationsCount()}" id="notificationCount" data-w-id="e7b9ea0b-e50d-94a9-8d46-bc0df0a300ad" class="div-block-8">
-                    <div class="text-block-5">12</div>
+                  <div th:style="${user.getNotificationsCount() > 0 ? 'display: block;' : 'display: none;'}" id="notificationCount" data-w-id="e7b9ea0b-e50d-94a9-8d46-bc0df0a300ad" class="div-block-8">
+                    <div class="text-block-5"></div>
                   </div>
                 </div>
                 <nav  class="uui-navbar07_dropdown-list not w-dropdown-list">
@@ -272,52 +272,37 @@
   <script src="/js/webflow.js" type="text/javascript"></script>
   <script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-zoom@1.0.0"></script>
   <script>
-  document.addEventListener('DOMContentLoaded', function() {
-    // Add the fade class initially to ensure the transition works
-    var errorMessage = document.querySelector('.error-message');
-    var successMessage = document.querySelector('.success-message');
+    document.addEventListener('DOMContentLoaded', function() {
+      // Add the fade class initially to ensure the transition works
+      var errorMessage = document.querySelector('.error-message');
+      var successMessage = document.querySelector('.success-message');
 
-    if (errorMessage) {
-      errorMessage.classList.add('fade');
-    }
-
-    if (successMessage) {
-      successMessage.classList.add('fade');
-    }
-
-    // Function to hide the messages after 5 seconds
-    function hideMessages() {
       if (errorMessage) {
-        setTimeout(function() {
-          errorMessage.classList.add('fade-out');
-        }, 3000);
+        errorMessage.classList.add('fade');
       }
 
       if (successMessage) {
-        setTimeout(function() {
-          successMessage.classList.add('fade-out');
-        }, 3000);
+        successMessage.classList.add('fade');
       }
-    }
 
-    hideMessages();
-  });
+      // Function to hide the messages after 5 seconds
+      function hideMessages() {
+        if (errorMessage) {
+          setTimeout(function() {
+            errorMessage.classList.add('fade-out');
+          }, 3000);
+        }
 
+        if (successMessage) {
+          setTimeout(function() {
+            successMessage.classList.add('fade-out');
+          }, 3000);
+        }
+      }
 
-  var element = document.getElementById('notification');
-  element.addEventListener('click', function() {
-    var xhr = new XMLHttpRequest();
-    xhr.open("GET", "/notifications/markAsRead", true);
-    xhr.send();
-  });
-
-  element.addEventListener('click', function() {
-    var notificationCountElement = document.querySelector('.div-block-8');
-    notificationCountElement.style.display = 'none';
-
-  });
-
-
+      hideMessages();
+    });
   </script>
+
 </body>
 </html>
